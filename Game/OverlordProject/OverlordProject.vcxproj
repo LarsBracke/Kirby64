@@ -93,16 +93,36 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Helpers\GameManager.cpp" />
     <ClCompile Include="Helpers\MyHelpers.cpp" />
+    <ClCompile Include="Components\KirbyController.cpp" />
     <ClCompile Include="Materials\DiffuseMaterial_Skinned.cpp" />
+    <ClCompile Include="Materials\Shadow\DiffuseMaterial_Shadow.cpp" />
+    <ClCompile Include="Materials\Shadow\DiffuseMaterial_Shadow_Skinned.cpp" />
     <ClCompile Include="Prefabs\BoneObject.cpp" />
     <ClCompile Include="Materials\DiffuseMaterial.cpp" />
     <ClCompile Include="Prefabs\Character.cpp" />
+    <ClCompile Include="Scenes\Game\TrainingStage.cpp" />
+    <ClCompile Include="Scenes\Week 4\ModelTestScene.cpp" />
+    <ClCompile Include="Scenes\Week 3\PongScene.cpp" />
+    <ClCompile Include="Scenes\Week 3\ComponentTestScene.cpp" />
     <ClCompile Include="Prefabs\CubePrefab.cpp" />
     <ClCompile Include="Prefabs\SpherePrefab.cpp" />
     <ClCompile Include="Prefabs\TorusPrefab.cpp" />
     <ClCompile Include="Materials\ColorMaterial.cpp" />
+    <ClCompile Include="Scenes\Week 3\MinionScene.cpp" />
+    <ClCompile Include="Scenes\Week 4\SpikyScene.cpp" />
     <ClCompile Include="Materials\SpikyMaterial.cpp" />
+    <ClCompile Include="Scenes\Week 4\SpriteTestScene.cpp" />
+    <ClCompile Include="Scenes\Week 5\CharacterScene.cpp" />
+    <ClCompile Include="Scenes\Week 5\FontTestScene.cpp" />
+    <ClCompile Include="Scenes\Week 5\PickingScene.cpp" />
+    <ClCompile Include="Scenes\Week 6\SoftwareSkinningScene_1.cpp" />
+    <ClCompile Include="Scenes\Week 6\SoftwareSkinningScene_2.cpp" />
+    <ClCompile Include="Scenes\Week 6\SoftwareSkinningScene_3.cpp" />
+    <ClCompile Include="Scenes\Week 7\HardwareSkinningScene.cpp" />
+    <ClCompile Include="Scenes\Week 8\ShadowMappingScene.cpp" />
+    <ClCompile Include="Scenes\Week 9\ParticleScene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
@@ -118,8 +138,8 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Scenes\Week 4\UberMaterialScene.cpp" />
     <ClCompile Include="Materials\UberMaterial.cpp" />
-    <ClCompile Include="Scenes\TrainingStage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OverlordEngine\OverlordEngine.vcxproj">
@@ -127,20 +147,41 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Helpers\GameManager.h" />
+    <ClInclude Include="Helpers\Singleton.h" />
     <ClInclude Include="Helpers\MyHelpers.h" />
+    <ClInclude Include="Components\KirbyController.h" />
     <ClInclude Include="Materials\DiffuseMaterial_Skinned.h" />
+    <ClInclude Include="Materials\Shadow\DiffuseMaterial_Shadow.h" />
+    <ClInclude Include="Materials\Shadow\DiffuseMaterial_Shadow_Skinned.h" />
     <ClInclude Include="Prefabs\BoneObject.h" />
     <ClInclude Include="Materials\DiffuseMaterial.h" />
     <ClInclude Include="Prefabs\Character.h" />
+    <ClInclude Include="Scenes\Game\TrainingStage.h" />
+    <ClInclude Include="Scenes\Week 4\ModelTestScene.h" />
+    <ClInclude Include="Scenes\Week 3\PongScene.h" />
+    <ClInclude Include="Scenes\Week 3\ComponentTestScene.h" />
     <ClInclude Include="Prefabs\CubePrefab.h" />
     <ClInclude Include="Prefabs\SpherePrefab.h" />
     <ClInclude Include="Prefabs\TorusPrefab.h" />
     <ClInclude Include="Materials\ColorMaterial.h" />
+    <ClInclude Include="Scenes\Week 3\MinionScene.h" />
+    <ClInclude Include="Scenes\Week 4\SpikyScene.h" />
     <ClInclude Include="Materials\SpikyMaterial.h" />
+    <ClInclude Include="Scenes\Week 4\SpriteTestScene.h" />
+    <ClInclude Include="Scenes\Week 5\CharacterScene.h" />
+    <ClInclude Include="Scenes\Week 5\FontTestScene.h" />
+    <ClInclude Include="Scenes\Week 5\PickingScene.h" />
+    <ClInclude Include="Scenes\Week 6\SoftwareSkinningScene_1.h" />
+    <ClInclude Include="Scenes\Week 6\SoftwareSkinningScene_2.h" />
+    <ClInclude Include="Scenes\Week 6\SoftwareSkinningScene_3.h" />
+    <ClInclude Include="Scenes\Week 7\HardwareSkinningScene.h" />
+    <ClInclude Include="Scenes\Week 8\ShadowMappingScene.h" />
+    <ClInclude Include="Scenes\Week 9\ParticleScene.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="Scenes\Week 4\UberMaterialScene.h" />
     <ClInclude Include="Materials\UberMaterial.h" />
-    <ClInclude Include="Scenes\TrainingStage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
