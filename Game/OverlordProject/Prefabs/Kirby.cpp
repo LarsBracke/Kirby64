@@ -40,6 +40,7 @@ void Kirby::Initialize(const SceneContext& sceneContext)
 	m_CharacterDesc.actionId_MoveLeft = MoveLeft;
 	m_CharacterDesc.actionId_MoveRight = MoveRight;
 	m_CharacterDesc.actionId_Jump = Jump;
+	m_CharacterDesc.JumpSpeed = 25.f;
 	m_pController = AddComponent(new ControllerComponent(m_CharacterDesc.controller));
 
 	const InputAction actionMoveRight{ MoveRight, InputState::down, VK_RIGHT, -1 };
@@ -93,6 +94,15 @@ void Kirby::Update(const SceneContext& sceneContext)
 		m_TotalVelocity.y = m_CharacterDesc.JumpSpeed;
 	else
 		m_TotalVelocity.y = 0;
+
+	/*jumping*/
+	if (m_JumpCount > 0 && sceneContext.pInput->IsActionTriggered(Jump))
+	{
+		m_TotalVelocity.y = m_CharacterDesc.JumpSpeed;
+		--m_JumpCount;
+	}
+	if (isGrounded)
+		m_JumpCount = m_MaxJumpCount;
 
 
 	/*apply the displacement*/

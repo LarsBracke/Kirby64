@@ -24,6 +24,8 @@ private:
 
 	PxMaterial* m_pPhysicsMaterial;
 	CharacterDesc m_CharacterDesc;
+	const unsigned int m_MaxJumpCount{ 5 };
+	unsigned int m_JumpCount{ m_MaxJumpCount };
 
 	XMFLOAT3 m_TotalVelocity{ };
 	const float m_FallAcceleration{ };
