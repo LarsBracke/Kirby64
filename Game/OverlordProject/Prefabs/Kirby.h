@@ -25,6 +25,9 @@ private:
 	PxMaterial* m_pPhysicsMaterial;
 	CharacterDesc m_CharacterDesc;
 
+	XMFLOAT3 m_TotalVelocity{ };
+	const float m_FallAcceleration{ };
+
 	enum InputIDs
 	{
 		MoveRight,

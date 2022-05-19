@@ -29,6 +29,7 @@ void TrainingStage::Initialize()
 
 	/*kirby*/
 	Kirby* pKirby{ new Kirby() };
+	pKirby->GetTransform()->Translate(0, 10, 0);
 	AddChild(pKirby);
 }
 

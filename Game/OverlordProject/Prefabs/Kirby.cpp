@@ -5,8 +5,9 @@
 #include "Materials/Shadow/DiffuseMaterial_Shadow.h"
 
 Kirby::Kirby()
-	: m_pPhysicsMaterial(PxGetPhysics().createMaterial(0.5f,0.5f,0.5f))
+	: m_pPhysicsMaterial(PxGetPhysics().createMaterial(0.f,0.f,0.5f))
 	, m_CharacterDesc(m_pPhysicsMaterial)
+	, m_FallAcceleration(m_CharacterDesc.maxFallSpeed / m_CharacterDesc.fallAccelerationTime)
 {
 }
 
@@ -48,14 +49,47 @@ void Kirby::Initialize(const SceneContext& sceneContext)
 
 void Kirby::Update(const SceneContext& sceneContext)
 {
+	/*movement*/
+	m_TotalVelocity.x = 0;
 	if (sceneContext.pInput->IsActionTriggered(MoveRight))
 	{
-		const float displacement = m_CharacterDesc.maxMoveSpeed * sceneContext.pGameTime->GetElapsed();
-		m_pController->Move(XMFLOAT3{ displacement, 0.f, 0.f });
+		const float displacement = m_CharacterDesc.maxMoveSpeed;
+		m_TotalVelocity.x += displacement;
 	}
 	if (sceneContext.pInput->IsActionTriggered(MoveLeft))
 	{
-		const float displacement = m_CharacterDesc.maxMoveSpeed * sceneContext.pGameTime->GetElapsed();
-		m_pController->Move(XMFLOAT3{ -displacement, 0.f, 0.f });
+		const float displacement = m_CharacterDesc.maxMoveSpeed;
+		m_TotalVelocity.x -= displacement;
 	}
+
+	/*gravity*/
+	PxVec3 origin = PhysxHelper::ToPxVec3(GetTransform()->GetPosition());
+	const float characterHeight = m_CharacterDesc.controller.height;
+	origin.y -= characterHeight / 2.f;
+	origin.y -= 0.25f;
+	const PxVec3 direction = PxVec3{ 0,-1,0 };
+
+	const PhysxProxy* pPhysXProxy = GetScene()->GetPhysxProxy();
+	PxRaycastBuffer hit{ };
+	const float castDistance = 0.5f;
+	bool isGrounded = pPhysXProxy->Raycast(origin, direction, castDistance, hit);
+
+	if (!isGrounded)
+	{
+		m_TotalVelocity.y -= (sceneContext.pGameTime->GetElapsed() * m_FallAcceleration);
+		if (m_TotalVelocity.y < -m_CharacterDesc.maxFallSpeed)
+			m_TotalVelocity.y = -m_CharacterDesc.maxFallSpeed;
+	}
+	else if (sceneContext.pInput->IsActionTriggered(m_CharacterDesc.actionId_Jump))
+		m_TotalVelocity.y = m_CharacterDesc.JumpSpeed;
+	else
+		m_TotalVelocity.y = 0;
+
+
+	/*apply the displacement*/
+	XMVECTOR totalVelocity = XMLoadFloat3(&m_TotalVelocity);
+	totalVelocity *= sceneContext.pGameTime->GetElapsed();
+	XMFLOAT3 displacement{ };
+	XMStoreFloat3(&displacement, totalVelocity);
+	m_pController->Move(displacement);
 }
