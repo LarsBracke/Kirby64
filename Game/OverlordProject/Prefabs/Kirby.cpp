@@ -16,17 +16,24 @@ void Kirby::Initialize(const SceneContext& sceneContext)
 	const auto pDefaultMaterial = PxGetPhysics().createMaterial(0.5f, 0.5f, 0.5f);
 
 	/*transformations*/
-	GetTransform()->Scale(25.f, 25.f, 25.f);
-	GetTransform()->Rotate(90.f, -90.f, 0.f);
+
 
 	/*model*/
-	m_pModelComponent = AddComponent(new ModelComponent(L"Meshes/Kirby.ovm"));
+	m_pModelComponent = new ModelComponent(L"Meshes/Kirby.ovm");
 	auto* pMainMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
 	pMainMaterial->SetDiffuseTexture(L"Textures/kirby_kirby_diffuse.png");
 	auto* pSecundaryMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
 	pSecundaryMaterial->SetDiffuseTexture(L"Textures/kirby_foot_diffuse.png");
 	m_pModelComponent->SetMaterial(pMainMaterial, 1);
 	m_pModelComponent->SetMaterial(pSecundaryMaterial, 0);
+
+	auto* pModel = new GameObject();
+	AddChild(pModel);
+	pModel->AddComponent(m_pModelComponent);
+	pModel->GetTransform()->Scale(25.f, 25.f, 25.f);
+	pModel->GetTransform()->Rotate(90.f, -90.f, 0.f);
+	pModel->GetTransform()->Translate(0, -2.f, 0);
+
 
 	/*controller*/
 	m_CharacterDesc = CharacterDesc{ pDefaultMaterial };
@@ -55,11 +62,13 @@ void Kirby::Update(const SceneContext& sceneContext)
 	{
 		const float displacement = m_CharacterDesc.maxMoveSpeed;
 		m_TotalVelocity.x += displacement;
+		GetTransform()->Rotate(0, 0, 0);
 ;	}
 	if (sceneContext.pInput->IsActionTriggered(MoveLeft))
 	{
 		const float displacement = m_CharacterDesc.maxMoveSpeed;
 		m_TotalVelocity.x -= displacement;
+		GetTransform()->Rotate(0, 180, 0);
 	}
 
 	/*gravity*/
