@@ -35,7 +35,7 @@
     <ClCompile Include="Scenes\Week 9\ParticleScene.cpp" />
     <ClCompile Include="Scenes\Game\TrainingStage.cpp" />
     <ClCompile Include="Helpers\GameManager.cpp" />
-    <ClCompile Include="Components\KirbyController.cpp" />
+    <ClCompile Include="Prefabs\Kirby.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />
@@ -72,6 +72,6 @@
     <ClInclude Include="Scenes\Game\TrainingStage.h" />
     <ClInclude Include="Helpers\GameManager.h" />
     <ClInclude Include="Helpers\Singleton.h" />
-    <ClInclude Include="Components\KirbyController.h" />
+    <ClInclude Include="Prefabs\Kirby.h" />
   </ItemGroup>
 </Project>

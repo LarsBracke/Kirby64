@@ -95,7 +95,7 @@
   <ItemGroup>
     <ClCompile Include="Helpers\GameManager.cpp" />
     <ClCompile Include="Helpers\MyHelpers.cpp" />
-    <ClCompile Include="Components\KirbyController.cpp" />
+    <ClCompile Include="Prefabs\Kirby.cpp" />
     <ClCompile Include="Materials\DiffuseMaterial_Skinned.cpp" />
     <ClCompile Include="Materials\Shadow\DiffuseMaterial_Shadow.cpp" />
     <ClCompile Include="Materials\Shadow\DiffuseMaterial_Shadow_Skinned.cpp" />
@@ -150,7 +150,7 @@
     <ClInclude Include="Helpers\GameManager.h" />
     <ClInclude Include="Helpers\Singleton.h" />
     <ClInclude Include="Helpers\MyHelpers.h" />
-    <ClInclude Include="Components\KirbyController.h" />
+    <ClInclude Include="Prefabs\Kirby.h" />
     <ClInclude Include="Materials\DiffuseMaterial_Skinned.h" />
     <ClInclude Include="Materials\Shadow\DiffuseMaterial_Shadow.h" />
     <ClInclude Include="Materials\Shadow\DiffuseMaterial_Shadow_Skinned.h" />
