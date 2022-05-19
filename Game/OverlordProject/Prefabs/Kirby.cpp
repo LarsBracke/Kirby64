@@ -55,7 +55,7 @@ void Kirby::Update(const SceneContext& sceneContext)
 	{
 		const float displacement = m_CharacterDesc.maxMoveSpeed;
 		m_TotalVelocity.x += displacement;
-	}
+;	}
 	if (sceneContext.pInput->IsActionTriggered(MoveLeft))
 	{
 		const float displacement = m_CharacterDesc.maxMoveSpeed;
