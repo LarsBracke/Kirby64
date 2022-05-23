@@ -4,11 +4,11 @@
 
 #include "Character.h"
 
-class Kirby : public GameObject
+class Kirby final : public GameObject
 {
 public:
 	Kirby();
-	~Kirby() = default;
+	~Kirby() override = default;
 	//Kirby(const Kirby& other) = delete;
 	//Kirby(Kirby&& other) noexcept = delete;
 	//Kirby& operator=(const Kirby& other) = delete;
@@ -18,9 +18,13 @@ public:
 	void Update(const SceneContext&) override;
 
 private:
+	void HandleMovement(const SceneContext& sceneContext);
+
+private:
 	ModelComponent* m_pModelComponent{ nullptr };
 	CameraComponent* m_pCameraComponent{ nullptr };
 	ControllerComponent* m_pController{ nullptr };
+	RigidBodyComponent* m_pRigidBody{ nullptr };
 
 	PxMaterial* m_pPhysicsMaterial;
 	CharacterDesc m_CharacterDesc;

@@ -34,6 +34,7 @@ void Kirby::Initialize(const SceneContext& sceneContext)
 	pModel->GetTransform()->Rotate(90.f, -90.f, 0.f);
 	pModel->GetTransform()->Translate(0, -2.f, 0);
 
+	/*collider*/
 
 	/*controller*/
 	m_CharacterDesc = CharacterDesc{ pDefaultMaterial };
@@ -57,6 +58,11 @@ void Kirby::Initialize(const SceneContext& sceneContext)
 
 void Kirby::Update(const SceneContext& sceneContext)
 {
+	HandleMovement(sceneContext);
+}
+
+void Kirby::HandleMovement(const SceneContext& sceneContext)
+{
 	/*movement*/
 	m_TotalVelocity.x = 0;
 	if (sceneContext.pInput->IsActionTriggered(MoveRight))
@@ -64,7 +70,8 @@ void Kirby::Update(const SceneContext& sceneContext)
 		const float displacement = m_CharacterDesc.maxMoveSpeed;
 		m_TotalVelocity.x += displacement;
 		GetTransform()->Rotate(0, 0, 0);
-;	}
+		;
+	}
 	if (sceneContext.pInput->IsActionTriggered(MoveLeft))
 	{
 		const float displacement = m_CharacterDesc.maxMoveSpeed;
@@ -81,8 +88,8 @@ void Kirby::Update(const SceneContext& sceneContext)
 
 	const PhysxProxy* pPhysXProxy = GetScene()->GetPhysxProxy();
 	PxRaycastBuffer hit{ };
-	const float castDistance = 0.5f;
-	bool isGrounded = pPhysXProxy->Raycast(origin, direction, castDistance, hit);
+	constexpr float castDistance = 0.5f;
+	const bool isGrounded = pPhysXProxy->Raycast(origin, direction, castDistance, hit);
 
 	if (!isGrounded)
 	{
