@@ -3,6 +3,7 @@
 
 #include "Character.h"
 #include "Materials/Shadow/DiffuseMaterial_Shadow.h"
+#include "Materials/Shadow/DiffuseMaterial_Shadow_Skinned.h"
 
 Kirby::Kirby()
 	: m_pPhysicsMaterial(PxGetPhysics().createMaterial(0.f,0.f,0.5f))
@@ -20,9 +21,9 @@ void Kirby::Initialize(const SceneContext& sceneContext)
 
 	/*model*/
 	m_pModelComponent = new ModelComponent(L"Meshes/Kirby.ovm");
-	auto* pMainMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
+	auto* pMainMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow_Skinned>();
 	pMainMaterial->SetDiffuseTexture(L"Textures/kirby_kirby_diffuse.png");
-	auto* pSecundaryMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
+	auto* pSecundaryMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow_Skinned>();
 	pSecundaryMaterial->SetDiffuseTexture(L"Textures/kirby_foot_diffuse.png");
 	m_pModelComponent->SetMaterial(pMainMaterial, 1);
 	m_pModelComponent->SetMaterial(pSecundaryMaterial, 0);
@@ -30,9 +31,9 @@ void Kirby::Initialize(const SceneContext& sceneContext)
 	auto* pModel = new GameObject();
 	AddChild(pModel);
 	pModel->AddComponent(m_pModelComponent);
-	pModel->GetTransform()->Scale(25.f, 25.f, 25.f);
+	pModel->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
 	pModel->GetTransform()->Rotate(90.f, -90.f, 0.f);
-	pModel->GetTransform()->Translate(0, -2.f, 0);
+	pModel->GetTransform()->Translate(0, 0, 0);
 
 	/*collider*/
 
@@ -54,6 +55,11 @@ void Kirby::Initialize(const SceneContext& sceneContext)
 
 	/*camera*/
 
+}
+
+void Kirby::PostInitialize(const SceneContext&)
+{
+	m_pModelComponent->GetAnimator()->Play();
 }
 
 void Kirby::Update(const SceneContext& sceneContext)
