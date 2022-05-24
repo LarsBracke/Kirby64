@@ -2,7 +2,7 @@
 #include "TrainingStage.h"
 
 #include "Materials/Shadow/DiffuseMaterial_Shadow.h"
-#include "Prefabs/Kirby.h"
+#include "Prefabs/KirbyPrefab.h"
 
 void TrainingStage::Initialize()
 {
@@ -28,7 +28,7 @@ void TrainingStage::Initialize()
 	pModelComponent->SetMaterial(pMaterial);
 
 	/*kirby*/
-	Kirby* pKirby{ new Kirby() };
+	KirbyPrefab* pKirby{ new KirbyPrefab() };
 	pKirby->GetTransform()->Translate(0, 10, 0);
 	AddChild(pKirby);
 }

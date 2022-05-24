@@ -4,15 +4,15 @@
 
 #include "Character.h"
 
-class Kirby final : public GameObject
+class KirbyPrefab final : public GameObject
 {
 public:
-	Kirby();
-	~Kirby() override = default;
-	//Kirby(const Kirby& other) = delete;
-	//Kirby(Kirby&& other) noexcept = delete;
-	//Kirby& operator=(const Kirby& other) = delete;
-	//Kirby& operator=(Kirby&& other) noexcept = delete;
+	KirbyPrefab();
+	~KirbyPrefab() override = default;
+	//KirbyPrefab(const KirbyPrefab& other) = delete;
+	//KirbyPrefab(KirbyPrefab&& other) noexcept = delete;
+	//KirbyPrefab& operator=(const KirbyPrefab& other) = delete;
+	//KirbyPrefab& operator=(KirbyPrefab&& other) noexcept = delete;
 
 	void Initialize(const SceneContext&) override;
 	void PostInitialize(const SceneContext&) override;

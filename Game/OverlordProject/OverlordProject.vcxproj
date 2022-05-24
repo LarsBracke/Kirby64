@@ -93,7 +93,7 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BoboPrefab.cpp" />
+    <ClCompile Include="Prefabs\BoboPrefab.cpp" />
     <ClCompile Include="Components\HealthComponent.cpp" />
     <ClCompile Include="Helpers\GameManager.cpp" />
     <ClCompile Include="Helpers\MyHelpers.cpp" />

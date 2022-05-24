@@ -36,7 +36,7 @@
     <ClCompile Include="Scenes\Game\TrainingStage.cpp" />
     <ClCompile Include="Helpers\GameManager.cpp" />
     <ClCompile Include="Prefabs\KirbyPrefab.cpp" />
-    <ClCompile Include="BoboPrefab.cpp" />
+    <ClCompile Include="Prefabs\BoboPrefab.cpp" />
     <ClCompile Include="Components\HealthComponent.cpp" />
   </ItemGroup>
   <ItemGroup>

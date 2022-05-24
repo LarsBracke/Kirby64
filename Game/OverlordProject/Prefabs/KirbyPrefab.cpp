@@ -1,18 +1,18 @@
 #include "stdafx.h"
-#include "Kirby.h"
+#include "KirbyPrefab.h"
 
 #include "Character.h"
 #include "Materials/Shadow/DiffuseMaterial_Shadow.h"
 #include "Materials/Shadow/DiffuseMaterial_Shadow_Skinned.h"
 
-Kirby::Kirby()
+KirbyPrefab::KirbyPrefab()
 	: m_pPhysicsMaterial(PxGetPhysics().createMaterial(0.f,0.f,0.5f))
 	, m_CharacterDesc(m_pPhysicsMaterial)
 	, m_FallAcceleration(m_CharacterDesc.maxFallSpeed / m_CharacterDesc.fallAccelerationTime)
 {
 }
 
-void Kirby::Initialize(const SceneContext& sceneContext)
+void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 {
 	const auto pDefaultMaterial = PxGetPhysics().createMaterial(0.5f, 0.5f, 0.5f);
 
@@ -20,7 +20,7 @@ void Kirby::Initialize(const SceneContext& sceneContext)
 
 
 	/*model*/
-	m_pModelComponent = new ModelComponent(L"Meshes/Kirby.ovm");
+	m_pModelComponent = new ModelComponent(L"Meshes/KirbyPrefab.ovm");
 	auto* pMainMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow_Skinned>();
 	pMainMaterial->SetDiffuseTexture(L"Textures/kirby_kirby_diffuse.png");
 	auto* pSecundaryMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow_Skinned>();
@@ -57,17 +57,17 @@ void Kirby::Initialize(const SceneContext& sceneContext)
 
 }
 
-void Kirby::PostInitialize(const SceneContext&)
+void KirbyPrefab::PostInitialize(const SceneContext&)
 {
 	m_pModelComponent->GetAnimator()->Play();
 }
 
-void Kirby::Update(const SceneContext& sceneContext)
+void KirbyPrefab::Update(const SceneContext& sceneContext)
 {
 	HandleMovement(sceneContext);
 }
 
-void Kirby::HandleMovement(const SceneContext& sceneContext)
+void KirbyPrefab::HandleMovement(const SceneContext& sceneContext)
 {
 	/*movement*/
 	m_TotalVelocity.x = 0;
