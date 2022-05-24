@@ -35,7 +35,9 @@
     <ClCompile Include="Scenes\Week 9\ParticleScene.cpp" />
     <ClCompile Include="Scenes\Game\TrainingStage.cpp" />
     <ClCompile Include="Helpers\GameManager.cpp" />
-    <ClCompile Include="Prefabs\Kirby.cpp" />
+    <ClCompile Include="Prefabs\KirbyPrefab.cpp" />
+    <ClCompile Include="BoboPrefab.cpp" />
+    <ClCompile Include="Components\HealthComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />
@@ -72,6 +74,8 @@
     <ClInclude Include="Scenes\Game\TrainingStage.h" />
     <ClInclude Include="Helpers\GameManager.h" />
     <ClInclude Include="Helpers\Singleton.h" />
-    <ClInclude Include="Prefabs\Kirby.h" />
+    <ClInclude Include="Prefabs\KirbyPrefab.h" />
+    <ClInclude Include="Prefabs\BoboPrefab.h" />
+    <ClInclude Include="Components\HealthComponent.h" />
   </ItemGroup>
 </Project>

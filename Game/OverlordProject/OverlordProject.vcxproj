@@ -93,9 +93,11 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BoboPrefab.cpp" />
+    <ClCompile Include="Components\HealthComponent.cpp" />
     <ClCompile Include="Helpers\GameManager.cpp" />
     <ClCompile Include="Helpers\MyHelpers.cpp" />
-    <ClCompile Include="Prefabs\Kirby.cpp" />
+    <ClCompile Include="Prefabs\KirbyPrefab.cpp" />
     <ClCompile Include="Materials\DiffuseMaterial_Skinned.cpp" />
     <ClCompile Include="Materials\Shadow\DiffuseMaterial_Shadow.cpp" />
     <ClCompile Include="Materials\Shadow\DiffuseMaterial_Shadow_Skinned.cpp" />
@@ -147,10 +149,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Components\HealthComponent.h" />
+    <ClInclude Include="Prefabs\BoboPrefab.h" />
     <ClInclude Include="Helpers\GameManager.h" />
     <ClInclude Include="Helpers\Singleton.h" />
     <ClInclude Include="Helpers\MyHelpers.h" />
-    <ClInclude Include="Prefabs\Kirby.h" />
+    <ClInclude Include="Prefabs\KirbyPrefab.h" />
     <ClInclude Include="Materials\DiffuseMaterial_Skinned.h" />
     <ClInclude Include="Materials\Shadow\DiffuseMaterial_Shadow.h" />
     <ClInclude Include="Materials\Shadow\DiffuseMaterial_Shadow_Skinned.h" />
