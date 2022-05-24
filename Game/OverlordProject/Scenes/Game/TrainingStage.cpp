@@ -2,6 +2,7 @@
 #include "TrainingStage.h"
 
 #include "Materials/Shadow/DiffuseMaterial_Shadow.h"
+#include "Prefabs/CubePrefab.h"
 #include "Prefabs/KirbyPrefab.h"
 
 void TrainingStage::Initialize()
@@ -31,6 +32,13 @@ void TrainingStage::Initialize()
 	KirbyPrefab* pKirby{ new KirbyPrefab() };
 	pKirby->GetTransform()->Translate(0, 10, 0);
 	AddChild(pKirby);
+
+	/*testing cube*/
+	auto* pCube = new CubePrefab(5,5,5);
+	pCube->AddComponent(new RigidBodyComponent())->AddCollider(PxBoxGeometry{ 2.5f,2.5f,2.5f }, *pDefaultMaterial);
+	pCube->GetTransform()->Translate(10, 5, 0);
+
+	AddChild(pCube);
 }
 
 void TrainingStage::Update()

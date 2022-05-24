@@ -25,7 +25,7 @@ private:
 	ModelComponent* m_pModelComponent{ nullptr };
 	CameraComponent* m_pCameraComponent{ nullptr };
 	ControllerComponent* m_pController{ nullptr };
-	RigidBodyComponent* m_pRigidBody{ nullptr };
+	RigidBodyComponent* m_pRigidBodyComponent{ nullptr };
 
 	PxMaterial* m_pPhysicsMaterial;
 	CharacterDesc m_CharacterDesc;

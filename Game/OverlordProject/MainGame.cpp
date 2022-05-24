@@ -11,6 +11,7 @@
 //#define W9
 //#define W10
 
+/*GAME Content*/
 #define GAME
 
 /*MILESTONE Content*/

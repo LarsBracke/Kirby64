@@ -20,7 +20,7 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 
 
 	/*model*/
-	m_pModelComponent = new ModelComponent(L"Meshes/KirbyPrefab.ovm");
+	m_pModelComponent = new ModelComponent(L"Meshes/Kirby.ovm");
 	auto* pMainMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow_Skinned>();
 	pMainMaterial->SetDiffuseTexture(L"Textures/kirby_kirby_diffuse.png");
 	auto* pSecundaryMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow_Skinned>();
@@ -29,13 +29,23 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 	m_pModelComponent->SetMaterial(pSecundaryMaterial, 0);
 
 	auto* pModel = new GameObject();
-	AddChild(pModel);
 	pModel->AddComponent(m_pModelComponent);
+	AddChild(pModel);
 	pModel->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
 	pModel->GetTransform()->Rotate(90.f, -90.f, 0.f);
 	pModel->GetTransform()->Translate(0, 0, 0);
 
-	/*collider*/
+	/*collision*/
+	auto* pCollision = new GameObject();
+	m_pRigidBodyComponent = pCollision->AddComponent(new RigidBodyComponent(true));
+	AddChild(pCollision);
+	m_pRigidBodyComponent->AddCollider(PxBoxGeometry{ 2.25f,0.5f,2.25f }, *pDefaultMaterial, true);
+
+	auto onKirbyHit = [&](GameObject*, GameObject* /*pOther*/, PxTriggerAction /*action*/)
+	{
+		Logger::LogDebug(L"Kirby was hit!");
+	};
+	pCollision->SetOnTriggerCallBack(onKirbyHit);
 
 	/*controller*/
 	m_CharacterDesc = CharacterDesc{ pDefaultMaterial };
@@ -124,4 +134,7 @@ void KirbyPrefab::HandleMovement(const SceneContext& sceneContext)
 	XMFLOAT3 displacement{ };
 	XMStoreFloat3(&displacement, totalVelocity);
 	m_pController->Move(displacement);
+
+	/*collider movement*/
+	m_pRigidBodyComponent->GetTransform()->Translate(GetTransform()->GetPosition());
 }
