@@ -2,6 +2,7 @@
 #include "KirbyPrefab.h"
 
 #include "Character.h"
+#include "Helpers/GameManager.h"
 #include "Materials/Shadow/DiffuseMaterial_Shadow.h"
 #include "Materials/Shadow/DiffuseMaterial_Shadow_Skinned.h"
 
@@ -58,10 +59,12 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 	const InputAction actionMoveRight{ MoveRight, InputState::down, VK_RIGHT, -1 };
 	const InputAction actionMoveLeft{ MoveLeft, InputState::down, VK_LEFT, -1 };
 	const InputAction actionJump{ Jump, InputState::pressed, VK_SPACE };
+	const InputAction actionInhale{ Inhale, InputState::down, 'Q', -1 };
 
 	sceneContext.pInput->AddInputAction(actionMoveRight);
 	sceneContext.pInput->AddInputAction(actionMoveLeft);
 	sceneContext.pInput->AddInputAction(actionJump);
+	sceneContext.pInput->AddInputAction(actionInhale);
 
 	/*camera*/
 
@@ -69,12 +72,17 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 
 void KirbyPrefab::PostInitialize(const SceneContext&)
 {
+	/*register kirby*/
+	GameManager::Get()->RegisterKirby(this);
+
+	/*start animating*/
 	m_pModelComponent->GetAnimator()->Play();
 }
 
 void KirbyPrefab::Update(const SceneContext& sceneContext)
 {
 	HandleMovement(sceneContext);
+	HandleInhaling(sceneContext);
 }
 
 void KirbyPrefab::HandleMovement(const SceneContext& sceneContext)
@@ -137,4 +145,12 @@ void KirbyPrefab::HandleMovement(const SceneContext& sceneContext)
 
 	/*collider movement*/
 	m_pRigidBodyComponent->GetTransform()->Translate(GetTransform()->GetPosition());
+}
+
+void KirbyPrefab::HandleInhaling(const SceneContext& sceneContext)
+{
+	if (sceneContext.pInput->IsActionTriggered(Inhale))
+	{
+		Logger::LogDebug(L"Inhaling");
+	}
 }

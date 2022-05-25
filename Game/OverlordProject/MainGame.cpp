@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "MainGame.h"
 
+#include "Helpers/GameManager.h"
+
 /*LAB Content*/
 //#define W3
 //#define W4
@@ -91,14 +93,15 @@
 #pragma endregion
 
 //Game is preparing
-void MainGame::OnGamePreparing(GameContext& /*gameContext*/)
+void MainGame::OnGamePreparing(GameContext& gameContext)
 {
+	GameManager::Create(gameContext);
+
 	//Here you can change some game settings before engine initialize
 	//gameContext.windowWidth=... (default is 1280)
 	//gameContext.windowHeight=... (default is 720)
 
-	//gameContext.windowTitle = L"GP2 - Milestone 3 (2022) | (2DAE13) Doe John";
-	//gameContext.windowTitle = L"GP2 - Exam Project (2022) | (2DAE13) Doe John";
+	gameContext.windowTitle = L"GP2 - Exam Project (2022) | (2DAE14) Bracke Lars";
 }
 
 void MainGame::Initialize()

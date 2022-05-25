@@ -20,6 +20,7 @@ public:
 
 private:
 	void HandleMovement(const SceneContext& sceneContext);
+	void HandleInhaling(const SceneContext& sceneContext);
 
 private:
 	ModelComponent* m_pModelComponent{ nullptr };
@@ -39,7 +40,8 @@ private:
 	{
 		MoveRight,
 		MoveLeft,
-		Jump
+		Jump,
+		Inhale
 	};
 };
 

@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "BoboPrefab.h"
 
+#include "Helpers/GameManager.h"
+
 #include "Materials/Shadow/DiffuseMaterial_Shadow.h"
 
 void BoboPrefab::Initialize(const SceneContext&)
@@ -32,6 +34,8 @@ void BoboPrefab::Initialize(const SceneContext&)
 
 void BoboPrefab::PostInitialize(const SceneContext&)
 {
+	/*register enemy*/
+	GameManager::Get()->RegisterEnemy(this);
 }
 
 void BoboPrefab::Update(const SceneContext&)
