@@ -5,6 +5,11 @@
 
 #include "Materials/Shadow/DiffuseMaterial_Shadow.h"
 
+BoboPrefab::BoboPrefab()
+	: m_pPhysicsMaterial(PxGetPhysics().createMaterial(0.5f,0.5f,0.5f))
+	, m_CharacterDesc(m_pPhysicsMaterial)
+{ }
+
 void BoboPrefab::Initialize(const SceneContext&)
 {
 	/*model*/
@@ -28,8 +33,7 @@ void BoboPrefab::Initialize(const SceneContext&)
 	pModel->GetTransform()->Rotate(0, 90, 0);
 
 	/*controller*/
-
-	/*Collider*/
+	m_pControllerComponent = AddComponent(new ControllerComponent(m_CharacterDesc.controller));
 }
 
 void BoboPrefab::PostInitialize(const SceneContext&)
