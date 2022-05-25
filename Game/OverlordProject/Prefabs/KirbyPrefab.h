@@ -3,6 +3,7 @@
 #include "stdafx.h"
 
 #include "Character.h"
+#include "Helpers/GameManager.h"
 
 class KirbyPrefab final : public GameObject
 {
@@ -23,6 +24,8 @@ private:
 	void HandleInhaling(const SceneContext& sceneContext);
 
 private:
+	GameManager* m_pGameManager{ nullptr };
+
 	ModelComponent* m_pModelComponent{ nullptr };
 	CameraComponent* m_pCameraComponent{ nullptr };
 	ControllerComponent* m_pController{ nullptr };
@@ -43,5 +46,8 @@ private:
 		Jump,
 		Inhale
 	};
+
+	const float m_InhaleRange{ 15.0f };
+	const float m_InhaleSpeed{ 10.0f };
 };
 

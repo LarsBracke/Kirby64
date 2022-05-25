@@ -4,10 +4,10 @@
 #include "Materials/Shadow/DiffuseMaterial_Shadow_Skinned.h"
 #include "Materials/ColorMaterial.h"
 
-GameObject* GameManager::GetClosestEnemy() const
+GameObject* GameManager::GetClosestEnemy(float range) const
 {
 	const XMVECTOR kirbyPosition = XMLoadFloat3(&m_pKirby->GetTransform()->GetPosition());
-	float distance{  };
+	float distance{ 1'000'000 };
 	GameObject* pClosestEnemy{ nullptr };
 	for (auto* pEnemy : m_Enemies)
 	{
@@ -16,7 +16,7 @@ GameObject* GameManager::GetClosestEnemy() const
 		const XMVECTOR length = XMVector3Length(toEnemy);
 		float temp{ };
 		XMStoreFloat(&temp, length);
-		if (temp < distance)
+		if (temp < distance && temp < range)
 		{
 			distance = abs(temp);
 			pClosestEnemy = pEnemy;

@@ -11,6 +11,7 @@ KirbyPrefab::KirbyPrefab()
 	, m_CharacterDesc(m_pPhysicsMaterial)
 	, m_FallAcceleration(m_CharacterDesc.maxFallSpeed / m_CharacterDesc.fallAccelerationTime)
 {
+	m_pGameManager = GameManager::Get();
 }
 
 void KirbyPrefab::Initialize(const SceneContext& sceneContext)
@@ -149,8 +150,22 @@ void KirbyPrefab::HandleMovement(const SceneContext& sceneContext)
 
 void KirbyPrefab::HandleInhaling(const SceneContext& sceneContext)
 {
-	if (sceneContext.pInput->IsActionTriggered(Inhale))
-	{
-		Logger::LogDebug(L"Inhaling");
-	}
+	if (!sceneContext.pInput->IsActionTriggered(Inhale))
+		return;
+
+	auto* pClosestEnemy = m_pGameManager->GetClosestEnemy(m_InhaleRange);
+	if (!pClosestEnemy)
+		return;
+
+	auto* pControllerComponent = pClosestEnemy->GetComponent<ControllerComponent>();
+	if (!pControllerComponent)
+		return;
+
+	XMVECTOR myPos = XMLoadFloat3(&GetTransform()->GetPosition());
+	XMVECTOR enemyPos = XMLoadFloat3(&pClosestEnemy->GetTransform()->GetPosition());
+	XMVECTOR toMe = XMVector3Normalize(XMVectorSubtract(myPos, enemyPos));
+	XMFLOAT3 displacement{ };
+	XMStoreFloat3(&displacement, toMe * m_InhaleSpeed * sceneContext.pGameTime->GetElapsed());
+	
+	pControllerComponent->Move(displacement);
 }

@@ -16,8 +16,9 @@ public:
 	GameManager& operator=(const GameManager& other) = delete;
 	GameManager& operator=(GameManager&& other) noexcept = delete;
 
-	GameObject* GetClosestEnemy() const;
+	GameObject* GetClosestEnemy(float range = 50.0f) const;
 	const XMFLOAT3& GetKirbyPosition() const { return m_pKirby->GetTransform()->GetPosition(); }
+
 	bool IsKirbyInRange(XMFLOAT3 origin, float range) const;
 
 private:
