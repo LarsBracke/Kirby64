@@ -34,6 +34,10 @@ void BoboPrefab::Initialize(const SceneContext&)
 
 	/*controller*/
 	m_pControllerComponent = AddComponent(new ControllerComponent(m_CharacterDesc.controller));
+
+	/*enemy component*/
+	m_pEnemyComponent = AddComponent(new EnemyComponent());
+
 }
 
 void BoboPrefab::PostInitialize(const SceneContext&)

@@ -38,6 +38,7 @@
     <ClCompile Include="Prefabs\KirbyPrefab.cpp" />
     <ClCompile Include="Prefabs\BoboPrefab.cpp" />
     <ClCompile Include="Components\HealthComponent.cpp" />
+    <ClCompile Include="Components\EnemyComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />
@@ -77,5 +78,6 @@
     <ClInclude Include="Prefabs\KirbyPrefab.h" />
     <ClInclude Include="Prefabs\BoboPrefab.h" />
     <ClInclude Include="Components\HealthComponent.h" />
+    <ClInclude Include="Components\EnemyComponent.h" />
   </ItemGroup>
 </Project>

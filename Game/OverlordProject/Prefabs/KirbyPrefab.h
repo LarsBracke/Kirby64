@@ -44,9 +44,11 @@ private:
 		MoveRight,
 		MoveLeft,
 		Jump,
-		Inhale
+		StartInhale,
+		StopInhale
 	};
 
+	bool m_IsInhaling{ false };
 	const float m_InhaleRange{ 15.0f };
 	const float m_InhaleSpeed{ 10.0f };
 };

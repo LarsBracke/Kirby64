@@ -93,6 +93,7 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Components\EnemyComponent.cpp" />
     <ClCompile Include="Prefabs\BoboPrefab.cpp" />
     <ClCompile Include="Components\HealthComponent.cpp" />
     <ClCompile Include="Helpers\GameManager.cpp" />
@@ -150,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\HealthComponent.h" />
+    <ClInclude Include="Components\EnemyComponent.h" />
     <ClInclude Include="Prefabs\BoboPrefab.h" />
     <ClInclude Include="Helpers\GameManager.h" />
     <ClInclude Include="Helpers\Singleton.h" />

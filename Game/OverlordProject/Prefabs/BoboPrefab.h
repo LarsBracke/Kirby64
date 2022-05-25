@@ -5,6 +5,8 @@
 
 #include "Helpers/GameManager.h"
 
+#include "Components/EnemyComponent.h"
+
 class BoboPrefab : public GameObject
 {
 public:
@@ -27,7 +29,7 @@ private:
 
 	ModelComponent* m_pModelComponent{ nullptr };
 	ControllerComponent* m_pControllerComponent{ nullptr };
-	RigidBodyComponent* m_pRigidBodyComponent{ nullptr };
+	EnemyComponent* m_pEnemyComponent{ nullptr };
 
 	PxMaterial* m_pPhysicsMaterial{ nullptr };
 	CharacterDesc m_CharacterDesc;

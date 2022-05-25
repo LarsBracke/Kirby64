@@ -2,9 +2,12 @@
 #include "KirbyPrefab.h"
 
 #include "Character.h"
+#include "Components/EnemyComponent.h"
 #include "Helpers/GameManager.h"
 #include "Materials/Shadow/DiffuseMaterial_Shadow.h"
 #include "Materials/Shadow/DiffuseMaterial_Shadow_Skinned.h"
+
+
 
 KirbyPrefab::KirbyPrefab()
 	: m_pPhysicsMaterial(PxGetPhysics().createMaterial(0.f,0.f,0.5f))
@@ -43,9 +46,12 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 	AddChild(pCollision);
 	m_pRigidBodyComponent->AddCollider(PxBoxGeometry{ 2.25f,0.5f,2.25f }, *pDefaultMaterial, true);
 
-	auto onKirbyHit = [&](GameObject*, GameObject* /*pOther*/, PxTriggerAction /*action*/)
+	auto onKirbyHit = [&](GameObject*, GameObject* pOther, PxTriggerAction /*action*/)
 	{
-		Logger::LogDebug(L"Kirby was hit!");
+		if (pOther->GetComponent<EnemyComponent>())
+		{
+			Logger::LogDebug(L"Collision with enemy");
+		}
 	};
 	pCollision->SetOnTriggerCallBack(onKirbyHit);
 
@@ -60,12 +66,14 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 	const InputAction actionMoveRight{ MoveRight, InputState::down, VK_RIGHT, -1 };
 	const InputAction actionMoveLeft{ MoveLeft, InputState::down, VK_LEFT, -1 };
 	const InputAction actionJump{ Jump, InputState::pressed, VK_SPACE };
-	const InputAction actionInhale{ Inhale, InputState::down, 'Q', -1 };
+	const InputAction actionStartInhale{ StartInhale, InputState::pressed, 'Q', -1 };
+	const InputAction actionStopInhale{ StopInhale, InputState::released, 'Q', -1 };
 
 	sceneContext.pInput->AddInputAction(actionMoveRight);
 	sceneContext.pInput->AddInputAction(actionMoveLeft);
 	sceneContext.pInput->AddInputAction(actionJump);
-	sceneContext.pInput->AddInputAction(actionInhale);
+	sceneContext.pInput->AddInputAction(actionStartInhale);
+	sceneContext.pInput->AddInputAction(actionStopInhale);
 
 	/*camera*/
 
@@ -150,7 +158,12 @@ void KirbyPrefab::HandleMovement(const SceneContext& sceneContext)
 
 void KirbyPrefab::HandleInhaling(const SceneContext& sceneContext)
 {
-	if (!sceneContext.pInput->IsActionTriggered(Inhale))
+	if (sceneContext.pInput->IsActionTriggered(StartInhale))
+		m_IsInhaling = true;
+	if (sceneContext.pInput->IsActionTriggered(StopInhale))
+		m_IsInhaling = false;
+
+	if (!m_IsInhaling)
 		return;
 
 	auto* pClosestEnemy = m_pGameManager->GetClosestEnemy(m_InhaleRange);
