@@ -25,3 +25,17 @@ GameObject* GameManager::GetClosestEnemy() const
 
 	return pClosestEnemy;
 }
+
+bool GameManager::IsKirbyInRange(XMFLOAT3 origin, float range) const
+{
+	if (!m_pKirby)
+		return false;
+
+	const XMVECTOR kirbyPosition = XMLoadFloat3(&m_pKirby->GetTransform()->GetPosition());
+	const XMVECTOR myPosition = XMLoadFloat3(&origin);
+	const XMVECTOR toKirby = XMVectorSubtract(kirbyPosition, myPosition);
+	float distance{ };
+	XMStoreFloat(&distance, XMVector3Length(toKirby));
+
+	return distance < range;
+}

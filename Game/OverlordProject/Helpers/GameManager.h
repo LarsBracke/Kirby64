@@ -17,6 +17,8 @@ public:
 	GameManager& operator=(GameManager&& other) noexcept = delete;
 
 	GameObject* GetClosestEnemy() const;
+	const XMFLOAT3& GetKirbyPosition() const { return m_pKirby->GetTransform()->GetPosition(); }
+	bool IsKirbyInRange(XMFLOAT3 origin, float range) const;
 
 private:
 	friend Singleton<GameManager>;

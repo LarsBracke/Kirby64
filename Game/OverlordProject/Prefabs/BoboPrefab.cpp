@@ -1,14 +1,14 @@
 #include "stdafx.h"
 #include "BoboPrefab.h"
 
-#include "Helpers/GameManager.h"
-
 #include "Materials/Shadow/DiffuseMaterial_Shadow.h"
 
 BoboPrefab::BoboPrefab()
 	: m_pPhysicsMaterial(PxGetPhysics().createMaterial(0.5f,0.5f,0.5f))
 	, m_CharacterDesc(m_pPhysicsMaterial)
-{ }
+{
+	m_pGameManager = GameManager::Get();
+}
 
 void BoboPrefab::Initialize(const SceneContext&)
 {
@@ -42,6 +42,19 @@ void BoboPrefab::PostInitialize(const SceneContext&)
 	GameManager::Get()->RegisterEnemy(this);
 }
 
-void BoboPrefab::Update(const SceneContext&)
+void BoboPrefab::Update(const SceneContext& sceneContext)
 {
+	if (m_pGameManager->IsKirbyInRange(GetTransform()->GetPosition(), m_AttackRange))
+		MoveToKirby(sceneContext);
+}
+
+void BoboPrefab::MoveToKirby(const SceneContext& sceneContext)
+{
+	XMVECTOR kirbyPos = XMLoadFloat3(&m_pGameManager->GetKirbyPosition());
+	XMVECTOR myPos = XMLoadFloat3(&GetTransform()->GetPosition());
+	XMFLOAT3 toKirby{ };
+	XMStoreFloat3(&toKirby, XMVector3Normalize(XMVectorSubtract(kirbyPos, myPos)));
+	XMFLOAT3 displacement{ };
+	displacement.x = toKirby.x * m_Speed * sceneContext.pGameTime->GetElapsed();
+	m_pControllerComponent->Move(displacement);
 }
