@@ -5,6 +5,8 @@
 #include "Character.h"
 #include "Helpers/GameManager.h"
 
+#include "Components/HealthComponent.h"
+
 class KirbyPrefab final : public GameObject
 {
 public:
@@ -23,6 +25,8 @@ private:
 	void HandleMovement(const SceneContext& sceneContext);
 	void HandleInhaling(const SceneContext& sceneContext);
 
+	void PushBack(const SceneContext& sceneContext, GameObject* pOther);
+
 private:
 	GameManager* m_pGameManager{ nullptr };
 
@@ -30,6 +34,7 @@ private:
 	CameraComponent* m_pCameraComponent{ nullptr };
 	ControllerComponent* m_pController{ nullptr };
 	RigidBodyComponent* m_pRigidBodyComponent{ nullptr };
+	HealthComponent* m_pHealthComponent{ nullptr };
 
 	PxMaterial* m_pPhysicsMaterial;
 	CharacterDesc m_CharacterDesc;
@@ -38,6 +43,10 @@ private:
 
 	XMFLOAT3 m_TotalVelocity{ };
 	const float m_FallAcceleration{ };
+
+	bool m_PushBack{ false };
+	const float m_PushBackSpeed{ 200.0f };
+	GameObject* m_pPushingObject{ nullptr };
 
 	enum InputIDs
 	{

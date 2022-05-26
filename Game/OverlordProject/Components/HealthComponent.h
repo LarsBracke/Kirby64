@@ -18,6 +18,9 @@ public:
 	void Heal(unsigned int amount);
 	void ResetHealth();
 
+protected:
+	void Initialize(const SceneContext& /*sceneContext*/) override { }
+
 private:
 	const unsigned int m_InitialHealth;
 	unsigned int m_Health;

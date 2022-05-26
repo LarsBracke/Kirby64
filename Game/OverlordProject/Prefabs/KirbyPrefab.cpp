@@ -53,8 +53,13 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 
 		if (auto* pEnemyComponent = pOther->GetComponent<EnemyComponent>())
 		{
-			Logger::LogDebug(L"Collision with enemy");
-			pEnemyComponent->Kill();
+			if (m_IsInhaling)
+				pEnemyComponent->Kill();
+			else
+			{
+				m_PushBack = true;
+				m_pPushingObject = pOther;
+			}
 		}
 	};
 	pCollision->SetOnTriggerCallBack(onKirbyHit);
@@ -78,6 +83,9 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 	sceneContext.pInput->AddInputAction(actionJump);
 	sceneContext.pInput->AddInputAction(actionStartInhale);
 	sceneContext.pInput->AddInputAction(actionStopInhale);
+
+	/*health*/
+	m_pHealthComponent = AddComponent(new HealthComponent(10));
 
 	/*camera*/
 
@@ -158,6 +166,14 @@ void KirbyPrefab::HandleMovement(const SceneContext& sceneContext)
 
 	/*collider movement*/
 	m_pRigidBodyComponent->GetTransform()->Translate(GetTransform()->GetPosition());
+
+	/*pushing back*/
+	if (m_PushBack && m_pPushingObject)
+	{
+		PushBack(sceneContext, m_pPushingObject);
+		m_PushBack = false;
+		m_pPushingObject = nullptr;
+	}
 }
 
 void KirbyPrefab::HandleInhaling(const SceneContext& sceneContext)
@@ -185,4 +201,16 @@ void KirbyPrefab::HandleInhaling(const SceneContext& sceneContext)
 	XMStoreFloat3(&displacement, toMe * m_InhaleSpeed * sceneContext.pGameTime->GetElapsed());
 	
 	pControllerComponent->Move(displacement);
+}
+
+void KirbyPrefab::PushBack(const SceneContext& sceneContext, GameObject* pOther)
+{
+	m_pHealthComponent->DoDamage(1);
+	float myPosX = GetTransform()->GetPosition().x;
+	float enemyPosX = pOther->GetTransform()->GetPosition().x;
+
+	if (myPosX < enemyPosX)
+		m_pController->Move(XMFLOAT3{ -m_PushBackSpeed * sceneContext.pGameTime->GetElapsed(), 0 ,0 });
+	else
+		m_pController->Move(XMFLOAT3{ m_PushBackSpeed * sceneContext.pGameTime->GetElapsed(), 0 ,0 });
 }
