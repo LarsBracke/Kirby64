@@ -34,6 +34,7 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 	pSecundaryMaterial->SetDiffuseTexture(L"Textures/kirby_foot_diffuse.png");
 	m_pModelComponent->SetMaterial(pMainMaterial, 1);
 	m_pModelComponent->SetMaterial(pSecundaryMaterial, 0);
+	m_pModelComponent->SetMaterial(pSecundaryMaterial, 4);
 
 	auto* pModel = new GameObject();
 	pModel->AddComponent(m_pModelComponent);
