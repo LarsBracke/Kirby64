@@ -6,31 +6,30 @@
 
 #include "Prefabs/StarPrefab.h"
 
-GameObject* GameManager::GetClosestEnemy(float /*range*/) const
+GameObject* GameManager::GetClosestEnemy(float range) const
 {
-	//const XMVECTOR kirbyPosition = XMLoadFloat3(&m_pKirby->GetTransform()->GetPosition());
-	//float distance{ 1'000'000 };
-	//GameObject* pClosestEnemy{ nullptr };
-	//for (auto* pEnemy : m_Enemies)
-	//{
-	//	if (pEnemy == nullptr)
-	//		continue;
+	const XMVECTOR kirbyPosition = XMLoadFloat3(&m_pKirby->GetTransform()->GetPosition());
+	float distance{ 1'000'000 };
+	GameObject* pClosestEnemy{ nullptr };
 
-	//	const XMVECTOR enemyPosition = XMLoadFloat3(&pEnemy->GetTransform()->GetPosition());
-	//	const XMVECTOR toEnemy = XMVectorSubtract(enemyPosition, kirbyPosition);
-	//	const XMVECTOR length = XMVector3Length(toEnemy);
-	//	float temp{ };
-	//	XMStoreFloat(&temp, length);
-	//	if (temp < distance && temp < range)
-	//	{
-	//		distance = abs(temp);
-	//		pClosestEnemy = pEnemy;
-	//	}
-	//}
+	for (auto* pEnemy : m_Enemies)
+	{
+		if (pEnemy == nullptr)
+			continue;
 
-	//return pClosestEnemy;
+		const XMVECTOR enemyPosition = XMLoadFloat3(&pEnemy->GetTransform()->GetPosition());
+		const XMVECTOR toEnemy = XMVectorSubtract(enemyPosition, kirbyPosition);
+		const XMVECTOR length = XMVector3Length(toEnemy);
+		float temp{ };
+		XMStoreFloat(&temp, length);
+		if (temp < distance && temp < range)
+		{
+			distance = abs(temp);
+			pClosestEnemy = pEnemy;
+		}
+	}
 
-	return nullptr;
+	return pClosestEnemy;
 }
 
 bool GameManager::IsKirbyInRange(XMFLOAT3 origin, float range) const

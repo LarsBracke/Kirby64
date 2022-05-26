@@ -43,6 +43,7 @@ void BoboPrefab::Initialize(const SceneContext&)
 
 	/*enemy component*/
 	m_pEnemyComponent = AddComponent(new EnemyComponent());
+	m_pEnemyComponent->SetAbilityType(AbilityType::Fire);
 
 }
 

@@ -8,6 +8,7 @@ class GameManager : public Singleton<GameManager>
 public:
 	void RegisterKirby(GameObject* pKirby) { m_pKirby = pKirby; };
 	void RegisterEnemy(GameObject* pEnemy) { m_Enemies.push_back(pEnemy); }
+	void UnRegisterEnemy(GameObject* pEnemy) { m_Enemies.erase(std::remove(m_Enemies.begin(), m_Enemies.end(), pEnemy), m_Enemies.end()); }
 
 	void Initialize() override { };
 

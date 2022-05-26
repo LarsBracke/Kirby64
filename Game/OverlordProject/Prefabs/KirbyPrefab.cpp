@@ -56,7 +56,10 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 		if (auto* pEnemyComponent = pOther->GetComponent<EnemyComponent>())
 		{
 			if (m_IsInhaling)
+			{
+				m_pInhaledEnemy = new AbilityType(pEnemyComponent->GetAbilityType());
 				pEnemyComponent->Kill();
+			}
 			else
 			{
 				m_PushBack = true;
@@ -210,12 +213,14 @@ void KirbyPrefab::HandleInhaling(const SceneContext& sceneContext)
 
 void KirbyPrefab::HandleExhaling(const SceneContext& sceneContext)
 {
-	if (sceneContext.pInput->IsActionTriggered(Exhale))
+	if (sceneContext.pInput->IsActionTriggered(Exhale) && m_pInhaledEnemy != nullptr)
 	{
 		if (GetTransform()->GetForward().x < 0)
 			m_pGameManager->ShootStar(GetTransform()->GetPosition(), { -1,0,0 });
 		else
 			m_pGameManager->ShootStar(GetTransform()->GetPosition(), { 1,0,0 });
+
+		m_pInhaledEnemy = nullptr;
 	}
 
 	

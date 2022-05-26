@@ -7,6 +7,8 @@
 
 #include "Components/HealthComponent.h"
 
+#include "Misc/AbilityType.h"
+
 class KirbyPrefab final : public GameObject
 {
 public:
@@ -66,5 +68,10 @@ private:
 	bool m_IsInhaling{ false };
 	const float m_InhaleRange{ 15.0f };
 	const float m_InhaleSpeed{ 10.0f };
+
+	AbilityType* m_pInhaledEnemy{ nullptr };
+
+	// Abilities
+	AbilityType* m_pActiveAbility{ nullptr };
 };
 

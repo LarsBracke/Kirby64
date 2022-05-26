@@ -3,6 +3,7 @@
 
 enum class AbilityType
 {
+	None,
 	Fire,
-	Bomb,
+	Bomb
 };
