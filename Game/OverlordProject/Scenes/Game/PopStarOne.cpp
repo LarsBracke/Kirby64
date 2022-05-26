@@ -21,6 +21,9 @@ void PopStarOne::Initialize()
 	m_SceneContext.pLights->SetDirectionalLight({ -95.6139526f,66.1346436f,-41.1850471f }, { 0.740129888f, -0.597205281f, 0.309117377f });
 
 	/*stage*/
+	auto* pLevel = new GameObject();
+	AddChild(pLevel);
+
 	auto* pGroundPlane = new GameObject();
 	pGroundPlane->GetTransform()->Rotate(0, 90, 0);
 	pGroundPlane->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
@@ -29,7 +32,7 @@ void PopStarOne::Initialize()
 	auto* pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial>();
 	pMaterial->SetDiffuseTexture(L"Textures/GroundPlane.png");
 	pModelComponent->SetMaterial(pMaterial);
-	AddChild(pGroundPlane);
+	pLevel->AddChild(pGroundPlane);
 
 	auto* pPath = new GameObject();
 	pPath->GetTransform()->Rotate(0, 90, 0);
@@ -38,7 +41,7 @@ void PopStarOne::Initialize()
 	pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial>();
 	pMaterial->SetDiffuseTexture(L"Textures/Path.png");
 	pModelComponent->SetMaterial(pMaterial);
-	AddChild(pPath);
+	pLevel->AddChild(pPath);
 
 	/*kirby*/
 	KirbyPrefab* pKirby{ new KirbyPrefab() };
