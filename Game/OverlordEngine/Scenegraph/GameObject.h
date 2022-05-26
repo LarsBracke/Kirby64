@@ -48,6 +48,9 @@ public:
 
 	void SetOnTriggerCallBack(PhysicsCallback callback);
 
+	void MarkForDeletion() { m_IsMarkedForDeletion = true; };
+	bool IsMarkedForDeletion() const { return m_IsMarkedForDeletion; }
+
 #pragma region
 	template <class T>
 	bool HasComponent(bool searchChildren = false)
@@ -159,7 +162,7 @@ private:
 	std::vector<GameObject*> m_pChildren{};
 	std::vector<BaseComponent*> m_pComponents{};
 
-	bool m_IsInitialized{}, m_IsActive{};
+	bool m_IsInitialized{}, m_IsActive{}, m_IsMarkedForDeletion{};
 	GameScene* m_pParentScene{};
 	GameObject* m_pParentObject{};
 	TransformComponent* m_pTransform{};

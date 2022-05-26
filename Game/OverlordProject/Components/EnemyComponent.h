@@ -8,6 +8,8 @@ public:
 	EnemyComponent() = default;
 	~EnemyComponent() override = default;
 
+	void Kill();
+
 protected:
 	void Initialize(const SceneContext& /*sceneContext*/) override { };
 };

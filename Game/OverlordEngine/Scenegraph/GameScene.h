@@ -38,6 +38,8 @@ public:
 	PhysxProxy* GetPhysxProxy() const { return m_pPhysxProxy; }
 	void SetActiveCamera(CameraComponent* pCameraComponent);
 
+	void DeleteMarkedObjects();
+
 protected:
 	virtual void Initialize() = 0;
 	virtual void PostInitialize() {};
@@ -51,6 +53,7 @@ protected:
 	virtual void OnSceneDeactivated() {}
 
 	SceneContext m_SceneContext{};
+
 private:
 	friend class SceneManager;
 

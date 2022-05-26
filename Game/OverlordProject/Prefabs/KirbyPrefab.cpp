@@ -48,9 +48,13 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 
 	auto onKirbyHit = [&](GameObject*, GameObject* pOther, PxTriggerAction /*action*/)
 	{
-		if (pOther->GetComponent<EnemyComponent>())
+		if (pOther == nullptr)
+			return;
+
+		if (auto* pEnemyComponent = pOther->GetComponent<EnemyComponent>())
 		{
 			Logger::LogDebug(L"Collision with enemy");
+			pEnemyComponent->Kill();
 		}
 	};
 	pCollision->SetOnTriggerCallBack(onKirbyHit);

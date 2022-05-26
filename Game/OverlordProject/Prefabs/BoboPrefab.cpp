@@ -10,6 +10,12 @@ BoboPrefab::BoboPrefab()
 	m_pGameManager = GameManager::Get();
 }
 
+BoboPrefab::~BoboPrefab()
+{
+	auto* pActor = GetComponent<ControllerComponent>()->GetPxController()->getActor();
+	SceneManager::Get()->GetActiveScene()->GetPhysxProxy()->GetPhysxScene()->removeActor(*pActor);
+}
+
 void BoboPrefab::Initialize(const SceneContext&)
 {
 	/*model*/

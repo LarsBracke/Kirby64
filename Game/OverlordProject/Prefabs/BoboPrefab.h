@@ -11,7 +11,7 @@ class BoboPrefab : public GameObject
 {
 public:
 	BoboPrefab();
-	~BoboPrefab() override = default;
+	~BoboPrefab();
 	BoboPrefab(const BoboPrefab& other) = delete;
 	BoboPrefab(BoboPrefab&& other) noexcept = delete;
 	BoboPrefab& operator=(const BoboPrefab& other) = delete;

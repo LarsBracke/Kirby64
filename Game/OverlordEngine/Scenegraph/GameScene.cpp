@@ -355,6 +355,25 @@ void GameScene::RootWindowStateChanged(int state, bool active) const
 	}
 }
 
+void GameScene::DeleteMarkedObjects()
+{
+	bool objectDeleted{ false };
+	for (int index = 0; index < m_pChildren.size(); ++index)
+	{
+		if (!m_pChildren[index]->IsMarkedForDeletion())
+			continue;
+
+		SafeDelete(m_pChildren[index]);
+		m_pChildren[index] = nullptr;
+		objectDeleted = true;
+	}
+
+	if (objectDeleted)
+	{
+		m_pChildren.erase(std::remove(m_pChildren.begin(), m_pChildren.end(), nullptr), m_pChildren.end());
+	}
+}
+
 void GameScene::AddPostProcessingEffect(PostProcessingMaterial* pMaterial)
 {
 	m_PostProcessingMaterials.push_back(pMaterial);

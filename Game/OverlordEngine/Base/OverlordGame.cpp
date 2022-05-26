@@ -480,6 +480,9 @@ void OverlordGame::GameLoop() const
 	m_pSwapchain->Present(activeSceneSettings.vSyncEnabled ? 1 : 0, 0);
 
 	GameStats::EndFrame();
+
+	if (auto* pActiveScene = SceneManager::Get()->GetActiveScene())
+		pActiveScene->DeleteMarkedObjects();
 }
 
 void OverlordGame::SetRenderTarget(RenderTarget* renderTarget)
