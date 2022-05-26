@@ -43,6 +43,16 @@ void PopStarOne::Initialize()
 	pModelComponent->SetMaterial(pMaterial);
 	pLevel->AddChild(pPath);
 
+	auto* pSky = new GameObject();
+	pSky->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
+	pSky->GetTransform()->Rotate(0, 0, 90);
+	pSky->GetTransform()->Translate(0, 33.33f, 200);
+	pModelComponent = pSky->AddComponent(new ModelComponent(L"Meshes/Sky.ovm"));
+	pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial>();
+	pMaterial->SetDiffuseTexture(L"Textures/Sky.png");
+	pModelComponent->SetMaterial(pMaterial);
+	pLevel->AddChild(pSky);
+
 	/*kirby*/
 	KirbyPrefab* pKirby{ new KirbyPrefab() };
 	pKirby->GetTransform()->Translate(0, 10, 0);
