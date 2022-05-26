@@ -31,6 +31,15 @@ void PopStarOne::Initialize()
 	pModelComponent->SetMaterial(pMaterial);
 	AddChild(pGroundPlane);
 
+	auto* pPath = new GameObject();
+	pPath->GetTransform()->Rotate(0, 90, 0);
+	pPath->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
+	pModelComponent = pPath->AddComponent(new ModelComponent(L"Meshes/Path.ovm"));
+	pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial>();
+	pMaterial->SetDiffuseTexture(L"Textures/Path.png");
+	pModelComponent->SetMaterial(pMaterial);
+	AddChild(pPath);
+
 	/*kirby*/
 	KirbyPrefab* pKirby{ new KirbyPrefab() };
 	pKirby->GetTransform()->Translate(0, 10, 0);
