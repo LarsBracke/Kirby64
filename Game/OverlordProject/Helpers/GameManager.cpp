@@ -4,6 +4,8 @@
 #include "Materials/Shadow/DiffuseMaterial_Shadow_Skinned.h"
 #include "Materials/ColorMaterial.h"
 
+#include "Prefabs/StarPrefab.h"
+
 GameObject* GameManager::GetClosestEnemy(float /*range*/) const
 {
 	//const XMVECTOR kirbyPosition = XMLoadFloat3(&m_pKirby->GetTransform()->GetPosition());
@@ -43,4 +45,17 @@ bool GameManager::IsKirbyInRange(XMFLOAT3 origin, float range) const
 	XMStoreFloat(&distance, XMVector3Length(toKirby));
 
 	return distance < range;
+}
+
+void GameManager::ShootStar(XMFLOAT3 position, XMFLOAT3 direction)
+{
+	if (m_pStars == nullptr)
+	{
+		m_pStars = new GameObject();
+		SceneManager::Get()->GetActiveScene()->AddChild(m_pStars);
+	}
+
+	auto* pStar = new StarPrefab(direction);
+	pStar->GetTransform()->Translate(position);
+	m_pStars->AddChild(pStar);
 }

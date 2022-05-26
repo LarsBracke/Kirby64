@@ -126,6 +126,7 @@
     <ClCompile Include="Scenes\Week 7\HardwareSkinningScene.cpp" />
     <ClCompile Include="Scenes\Week 8\ShadowMappingScene.cpp" />
     <ClCompile Include="Scenes\Week 9\ParticleScene.cpp" />
+    <ClCompile Include="Prefabs\StarPrefab.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
@@ -152,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="Components\HealthComponent.h" />
     <ClInclude Include="Components\EnemyComponent.h" />
+    <ClInclude Include="Misc\AbilityType.h" />
     <ClInclude Include="Prefabs\BoboPrefab.h" />
     <ClInclude Include="Helpers\GameManager.h" />
     <ClInclude Include="Helpers\Singleton.h" />
@@ -184,6 +186,7 @@
     <ClInclude Include="Scenes\Week 7\HardwareSkinningScene.h" />
     <ClInclude Include="Scenes\Week 8\ShadowMappingScene.h" />
     <ClInclude Include="Scenes\Week 9\ParticleScene.h" />
+    <ClInclude Include="Prefabs\StarPrefab.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Scenes\Week 4\UberMaterialScene.h" />

@@ -21,6 +21,8 @@ public:
 
 	bool IsKirbyInRange(XMFLOAT3 origin, float range) const;
 
+	void ShootStar(XMFLOAT3 position, XMFLOAT3 direction);
+
 private:
 	friend Singleton<GameManager>;
 	GameManager() = default;
@@ -29,5 +31,7 @@ private:
 private:
 	GameObject* m_pKirby;
 	std::vector<GameObject*> m_Enemies;
+
+	GameObject* m_pStars{ nullptr };
 };
 

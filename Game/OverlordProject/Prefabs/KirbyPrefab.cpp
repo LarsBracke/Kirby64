@@ -3,11 +3,13 @@
 
 #include "Character.h"
 #include "Components/EnemyComponent.h"
+
 #include "Helpers/GameManager.h"
+
 #include "Materials/Shadow/DiffuseMaterial_Shadow.h"
 #include "Materials/Shadow/DiffuseMaterial_Shadow_Skinned.h"
 
-
+#include "Prefabs/StarPrefab.h"
 
 KirbyPrefab::KirbyPrefab()
 	: m_pPhysicsMaterial(PxGetPhysics().createMaterial(0.f,0.f,0.5f))
@@ -77,12 +79,14 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 	const InputAction actionJump{ Jump, InputState::pressed, VK_SPACE };
 	const InputAction actionStartInhale{ StartInhale, InputState::pressed, 'Q', -1 };
 	const InputAction actionStopInhale{ StopInhale, InputState::released, 'Q', -1 };
+	const InputAction actionExhale{ Exhale, InputState::pressed, 'Z' };
 
 	sceneContext.pInput->AddInputAction(actionMoveRight);
 	sceneContext.pInput->AddInputAction(actionMoveLeft);
 	sceneContext.pInput->AddInputAction(actionJump);
 	sceneContext.pInput->AddInputAction(actionStartInhale);
 	sceneContext.pInput->AddInputAction(actionStopInhale);
+	sceneContext.pInput->AddInputAction(actionExhale);
 
 	/*health*/
 	m_pHealthComponent = AddComponent(new HealthComponent(10));
@@ -104,6 +108,7 @@ void KirbyPrefab::Update(const SceneContext& sceneContext)
 {
 	HandleMovement(sceneContext);
 	HandleInhaling(sceneContext);
+	HandleExhaling(sceneContext);
 }
 
 void KirbyPrefab::HandleMovement(const SceneContext& sceneContext)
@@ -203,11 +208,24 @@ void KirbyPrefab::HandleInhaling(const SceneContext& sceneContext)
 	pControllerComponent->Move(displacement);
 }
 
-void KirbyPrefab::PushBack(const SceneContext& sceneContext, GameObject* pOther)
+void KirbyPrefab::HandleExhaling(const SceneContext& sceneContext)
+{
+	if (sceneContext.pInput->IsActionTriggered(Exhale))
+	{
+		if (GetTransform()->GetForward().x < 0)
+			m_pGameManager->ShootStar(GetTransform()->GetPosition(), { -1,0,0 });
+		else
+			m_pGameManager->ShootStar(GetTransform()->GetPosition(), { 1,0,0 });
+	}
+
+	
+}
+
+void KirbyPrefab::PushBack(const SceneContext& sceneContext, const GameObject* pOther) const
 {
 	m_pHealthComponent->DoDamage(1);
-	float myPosX = GetTransform()->GetPosition().x;
-	float enemyPosX = pOther->GetTransform()->GetPosition().x;
+	const float myPosX = GetTransform()->GetPosition().x;
+	const float enemyPosX = pOther->GetTransform()->GetPosition().x;
 
 	if (myPosX < enemyPosX)
 		m_pController->Move(XMFLOAT3{ -m_PushBackSpeed * sceneContext.pGameTime->GetElapsed(), 0 ,0 });

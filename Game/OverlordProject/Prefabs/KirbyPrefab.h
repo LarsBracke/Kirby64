@@ -24,18 +24,21 @@ public:
 private:
 	void HandleMovement(const SceneContext& sceneContext);
 	void HandleInhaling(const SceneContext& sceneContext);
+	void HandleExhaling(const SceneContext& sceneContext);
 
-	void PushBack(const SceneContext& sceneContext, GameObject* pOther);
+	void PushBack(const SceneContext& sceneContext, const GameObject* pOther) const;
 
 private:
 	GameManager* m_pGameManager{ nullptr };
 
+	// Components
 	ModelComponent* m_pModelComponent{ nullptr };
 	CameraComponent* m_pCameraComponent{ nullptr };
 	ControllerComponent* m_pController{ nullptr };
 	RigidBodyComponent* m_pRigidBodyComponent{ nullptr };
 	HealthComponent* m_pHealthComponent{ nullptr };
 
+	// Movement
 	PxMaterial* m_pPhysicsMaterial;
 	CharacterDesc m_CharacterDesc;
 	const unsigned int m_MaxJumpCount{ 5 };
@@ -48,15 +51,18 @@ private:
 	const float m_PushBackSpeed{ 200.0f };
 	GameObject* m_pPushingObject{ nullptr };
 
+	// Input
 	enum InputIDs
 	{
 		MoveRight,
 		MoveLeft,
 		Jump,
 		StartInhale,
-		StopInhale
+		StopInhale,
+		Exhale
 	};
 
+	// Inhaling
 	bool m_IsInhaling{ false };
 	const float m_InhaleRange{ 15.0f };
 	const float m_InhaleSpeed{ 10.0f };
