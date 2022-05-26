@@ -30,6 +30,7 @@ private:
 	ModelComponent* m_pModelComponent{ nullptr };
 	ControllerComponent* m_pControllerComponent{ nullptr };
 	EnemyComponent* m_pEnemyComponent{ nullptr };
+	ParticleEmitterComponent* m_pParticleEmitterComponent{ nullptr };
 
 	PxMaterial* m_pPhysicsMaterial{ nullptr };
 	CharacterDesc m_CharacterDesc;

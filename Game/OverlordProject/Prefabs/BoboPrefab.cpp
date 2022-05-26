@@ -45,6 +45,20 @@ void BoboPrefab::Initialize(const SceneContext&)
 	m_pEnemyComponent = AddComponent(new EnemyComponent());
 	m_pEnemyComponent->SetAbilityType(AbilityType::Fire);
 
+	/*fire particle system*/
+	ParticleEmitterSettings settings{ };
+	settings.velocity = { 0.f,6.f,0.f };
+	settings.minSize = 2.5f;
+	settings.maxSize = 3.0f;
+	settings.minEnergy = 0.25f;
+	settings.maxEnergy = 0.5f;
+	settings.minScale = 3.f;
+	settings.maxScale = 4.f;
+	settings.minEmitterRadius = .5f;
+	settings.maxEmitterRadius = .5f;
+	settings.color = { 1.f,1.f,1.f, .6f };
+
+	m_pParticleEmitterComponent = pModel->AddComponent(new ParticleEmitterComponent(L"Textures/Bobo_Body.png", settings));
 }
 
 void BoboPrefab::PostInitialize(const SceneContext&)
