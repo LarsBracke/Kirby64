@@ -88,6 +88,7 @@
 
 #ifdef GAME
 #include "Scenes/Game/TrainingStage.h"
+#include "Scenes/Game/PopStarOne.h"
 #endif
 
 #pragma endregion
@@ -172,7 +173,8 @@ void MainGame::Initialize()
 #endif
 
 #ifdef GAME
-	SceneManager::Get()->AddGameScene(new TrainingStage());
+	//SceneManager::Get()->AddGameScene(new TrainingStage());
+	SceneManager::Get()->AddGameScene(new PopStarOne());
 #endif
 }
 
