@@ -7,6 +7,7 @@
 #include "Prefabs/CubePrefab.h"
 #include "Prefabs/KirbyPrefab.h"
 #include "Prefabs/BoboPrefab.h"
+#include "Prefabs/InGameHudPrefab.h"
 
 void PopStarOne::Initialize()
 {
@@ -62,6 +63,10 @@ void PopStarOne::Initialize()
 	auto* pBobo = new BoboPrefab();
 	pBobo->GetTransform()->Translate(25, 2, 0);
 	AddChild(pBobo);
+
+	/*HUD*/
+	auto* pHUD = new InGameHudPrefab();
+	AddChild(pHUD);
 
 	/*testing cube*/
 	auto* pCube = new CubePrefab(5,5,5);

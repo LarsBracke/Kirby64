@@ -41,6 +41,7 @@
     <ClCompile Include="Components\EnemyComponent.cpp" />
     <ClCompile Include="Prefabs\StarPrefab.cpp" />
     <ClCompile Include="Scenes\Game\PopStarOne.cpp" />
+    <ClCompile Include="Prefabs\InGameHudPrefab.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />
@@ -84,5 +85,6 @@
     <ClInclude Include="Misc\AbilityType.h" />
     <ClInclude Include="Prefabs\StarPrefab.h" />
     <ClInclude Include="Scenes\Game\PopStarOne.h" />
+    <ClInclude Include="Prefabs\InGameHudPrefab.h" />
   </ItemGroup>
 </Project>

@@ -94,6 +94,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Components\EnemyComponent.cpp" />
+    <ClCompile Include="Prefabs\InGameHudPrefab.cpp" />
     <ClCompile Include="Prefabs\BoboPrefab.cpp" />
     <ClCompile Include="Components\HealthComponent.cpp" />
     <ClCompile Include="Helpers\GameManager.cpp" />
@@ -154,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="Components\HealthComponent.h" />
     <ClInclude Include="Components\EnemyComponent.h" />
+    <ClInclude Include="Prefabs\InGameHudPrefab.h" />
     <ClInclude Include="Misc\AbilityType.h" />
     <ClInclude Include="Prefabs\BoboPrefab.h" />
     <ClInclude Include="Helpers\GameManager.h" />
