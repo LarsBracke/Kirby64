@@ -99,9 +99,11 @@ void PopStarOne::Update()
 void PopStarOne::HandleCameraMovement()
 {
 	const XMFLOAT3 kirbyPos = GameManager::Get()->GetKirbyPosition();
-	const XMFLOAT3 cameraPos = m_pCamera->GetTransform()->GetPosition();
 	const XMFLOAT3 newPos{ kirbyPos.x + m_CameraOffset.x, kirbyPos.y + m_CameraOffset.y, kirbyPos.z + m_CameraOffset.z };
 
+	const float t = m_CameraSnapSpeed * m_SceneContext.pGameTime->GetElapsed();
+	XMStoreFloat3(&m_CameraPosition, XMVectorLerp(XMLoadFloat3(&m_CameraPosition), XMLoadFloat3(&newPos), t));
+
 	m_pCamera->GetTransform()->Rotate(m_CameraRotation);
-	m_pCamera->GetTransform()->Translate(newPos);
+	m_pCamera->GetTransform()->Translate(m_CameraPosition);
 }
