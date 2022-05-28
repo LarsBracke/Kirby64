@@ -9,6 +9,8 @@
 
 #include "Misc/AbilityType.h"
 
+#include "Prefabs/FixedCamera.h"
+
 class KirbyPrefab final : public GameObject
 {
 public:
@@ -63,6 +65,10 @@ private:
 		StopInhale,
 		Exhale
 	};
+
+	// Camera
+	FixedCamera* m_pCamera{ nullptr };
+	XMFLOAT3 m_CameraOffset{ 2.5f, 5.f, 10.f };
 
 	// Animations
 	enum class AnimationState : UINT

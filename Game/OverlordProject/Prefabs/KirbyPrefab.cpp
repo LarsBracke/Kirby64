@@ -94,9 +94,6 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 
 	/*health*/
 	m_pHealthComponent = AddComponent(new HealthComponent(10));
-
-	/*camera*/
-
 }
 
 void KirbyPrefab::PostInitialize(const SceneContext&)

@@ -1,5 +1,8 @@
 #pragma once
 
+#include "stdafx.h"
+#include "Prefabs/FixedCamera.h"
+
 class PopStarOne final : public GameScene
 {
 public:
@@ -12,6 +15,15 @@ public:
 
 private:
 	void Initialize() override;
+	void PostInitialize() override;
 	void Update() override;
+
+	void HandleCameraMovement();
+
+private:
+	FixedCamera* m_pCamera{ nullptr };
+	CameraComponent* m_pCameraComponent{ nullptr };
+	const XMFLOAT3 m_CameraRotation{ 20.0f, -20.0f, 0.0f };
+	const XMFLOAT3 m_CameraOffset{ 15.0f, 10.0f, -30.0f };
 };
 
