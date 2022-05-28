@@ -29,7 +29,7 @@ void PopStarOne::Initialize()
 	auto* pGroundPlane = new GameObject();
 	pGroundPlane->GetTransform()->Rotate(0, 90, 0);
 	pGroundPlane->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
-	pGroundPlane->GetTransform()->Translate(0, 0, 100);
+	pGroundPlane->GetTransform()->Translate(0, 3, 75);
 	auto* pModelComponent = pGroundPlane->AddComponent(new ModelComponent(L"Meshes/GroundPlane.ovm"));
 	auto* pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial>();
 	pMaterial->SetDiffuseTexture(L"Textures/GroundPlane.png");
@@ -37,6 +37,7 @@ void PopStarOne::Initialize()
 	pLevel->AddChild(pGroundPlane);
 
 	auto* pPath = new GameObject();
+	pPath->GetTransform()->Translate(0, 0.1f, 0);
 	pPath->GetTransform()->Rotate(0, 90, 0);
 	pPath->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
 	pModelComponent = pPath->AddComponent(new ModelComponent(L"Meshes/Path.ovm"));
@@ -48,12 +49,22 @@ void PopStarOne::Initialize()
 	auto* pSky = new GameObject();
 	pSky->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
 	pSky->GetTransform()->Rotate(0, 0, 90);
-	pSky->GetTransform()->Translate(0, 33.33f, 200);
+	pSky->GetTransform()->Translate(0, 33.33f, 175);
 	pModelComponent = pSky->AddComponent(new ModelComponent(L"Meshes/Sky.ovm"));
 	pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial>();
 	pMaterial->SetDiffuseTexture(L"Textures/Sky.png");
 	pModelComponent->SetMaterial(pMaterial);
 	pLevel->AddChild(pSky);
+
+	auto* pBackgroundProps = new GameObject();
+	pBackgroundProps->GetTransform()->Translate(0, 5, 75);
+	pBackgroundProps->GetTransform()->Rotate(0, 90, 0);
+	pBackgroundProps->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
+	pModelComponent = pBackgroundProps->AddComponent(new ModelComponent(L"Meshes/BackgroundProps.ovm"));
+	pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial>();
+	pModelComponent->SetMaterial(pMaterial);
+	AddChild(pBackgroundProps);
+
 
 	/*kirby*/
 	KirbyPrefab* pKirby{ new KirbyPrefab() };
