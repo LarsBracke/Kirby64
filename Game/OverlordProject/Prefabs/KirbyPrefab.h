@@ -64,6 +64,16 @@ private:
 		Exhale
 	};
 
+	// Animations
+	enum class AnimationState : UINT
+	{
+		Idle,
+		Running
+	};
+
+	AnimationState m_CurrentAnimationState{ AnimationState::Idle };
+	void SetAnimationState(AnimationState newState, float speed = 1.0f);
+
 	// Inhaling
 	bool m_IsInhaling{ false };
 	const float m_InhaleRange{ 15.0f };

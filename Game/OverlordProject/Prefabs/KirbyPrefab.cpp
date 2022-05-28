@@ -173,6 +173,12 @@ void KirbyPrefab::HandleMovement(const SceneContext& sceneContext)
 	XMStoreFloat3(&displacement, totalVelocity);
 	m_pController->Move(displacement);
 
+	/*animations*/
+	if (abs(displacement.x) > 0.01f)
+		SetAnimationState(AnimationState::Running, 5.0f);
+	else
+		SetAnimationState(AnimationState::Idle);
+
 	/*collider movement*/
 	m_pRigidBodyComponent->GetTransform()->Translate(GetTransform()->GetPosition());
 
@@ -237,4 +243,16 @@ void KirbyPrefab::PushBack(const SceneContext& sceneContext, const GameObject* p
 		m_pController->Move(XMFLOAT3{ -m_PushBackSpeed * sceneContext.pGameTime->GetElapsed(), 0 ,0 });
 	else
 		m_pController->Move(XMFLOAT3{ m_PushBackSpeed * sceneContext.pGameTime->GetElapsed(), 0 ,0 });
+}
+
+void KirbyPrefab::SetAnimationState(AnimationState newState, float speed)
+{
+	if (m_CurrentAnimationState == newState)
+		return;
+
+	m_CurrentAnimationState = newState;
+	m_pModelComponent->GetAnimator()->SetAnimation(static_cast<UINT>(newState));
+	m_pModelComponent->GetAnimator()->SetAnimationSpeed(speed);
+	m_pModelComponent->GetAnimator()->Reset();
+	m_pModelComponent->GetAnimator()->Play();
 }
