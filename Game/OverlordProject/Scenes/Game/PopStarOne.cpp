@@ -88,7 +88,7 @@ void PopStarOne::Initialize()
 void PopStarOne::PostInitialize()
 {
 	m_pCameraComponent = m_pCamera->GetComponent<CameraComponent>();
-	m_pCameraComponent->SetActive(true);
+	//m_pCameraComponent->SetActive(true);
 }
 
 void PopStarOne::Update()

@@ -15,6 +15,8 @@ float gShadowHardness = 0.5f;
 Texture2D gDiffuseMap;
 Texture2D gShadowMap;
 
+bool gUseTextureAlpha = false;
+
 SamplerComparisonState cmpSampler
 {
 	// sampler state
@@ -31,6 +33,13 @@ SamplerState samLinear
     Filter = MIN_MAG_MIP_LINEAR;
     AddressU = Wrap;// or Mirror or Clamp or Border
     AddressV = Wrap;// or Mirror or Clamp or Border
+};
+
+BlendState gBS_EnableBlending 
+{     
+	BlendEnable[0] = TRUE;
+	SrcBlend = SRC_ALPHA;
+    DestBlend = INV_SRC_ALPHA;
 };
 
 struct VS_INPUT
@@ -148,10 +157,12 @@ float4 PS(VS_OUTPUT input) : SV_TARGET
     diffuseColor *= diffuseStrength * gLightIntensity;
 
     float3 rgb = diffuseColor.rgb;
-    float alpha = diffuseColor.a;
+    float alpha = 1.0f;
+	if (gUseTextureAlpha)
+		alpha = diffuseColor.a;
 
     // Final color
-    float4 finalColor = float4(rgb * shadowValue, alpha);
+    float4 finalColor = float4(rgb * shadowValue, saturate(alpha));
     return finalColor;
 }
 
@@ -163,6 +174,7 @@ technique11 Default
     pass P0
     {
 		SetRasterizerState(NoCulling);
+		SetBlendState(gBS_EnableBlending,float4(0.0f, 0.0f, 0.0f, 0.0f), 0xFFFFFFFF);
 		SetDepthStencilState(EnableDepth, 0);
 
 		SetVertexShader( CompileShader( vs_4_0, VS() ) );

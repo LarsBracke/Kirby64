@@ -29,12 +29,14 @@ void BoboPrefab::Initialize(const SceneContext&)
 
 	auto* pBodyMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow_Skinned>();
 	pBodyMaterial->SetDiffuseTexture(L"Textures/Bobo_Body.png");
+	pBodyMaterial->SetUseTextureAlpha(true);
 
 	auto* pFeetMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow_Skinned>();
 	pFeetMaterial->SetDiffuseTexture(L"Textures/Bobo_Feet.png");
 
 	auto* pEyesMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow_Skinned>();
 	pEyesMaterial->SetDiffuseTexture(L"Textures/Bobo_Eyes.png");
+	pEyesMaterial->SetUseTextureAlpha(true);
 
 	m_pModelComponent->SetMaterial(pFeetMaterial, 0);
 	m_pModelComponent->SetMaterial(pBodyMaterial, 1);
@@ -50,19 +52,23 @@ void BoboPrefab::Initialize(const SceneContext&)
 	m_pEnemyComponent->SetAbilityType(AbilityType::Fire);
 
 	/*fire particle system*/
+	auto* pFireEffect = new GameObject();
+	AddChild(pFireEffect);
+	pFireEffect->GetTransform()->Translate(0, 1.25f, 0);
+
 	ParticleEmitterSettings settings{ };
 	settings.velocity = { 0.f,6.f,0.f };
 	settings.minSize = 2.5f;
 	settings.maxSize = 3.0f;
 	settings.minEnergy = 0.25f;
 	settings.maxEnergy = 0.5f;
-	settings.minScale = 3.f;
-	settings.maxScale = 4.f;
-	settings.minEmitterRadius = .5f;
-	settings.maxEmitterRadius = .5f;
+	settings.minScale = 2.5f;
+	settings.maxScale = 3.5f;
+	settings.minEmitterRadius = .4f;
+	settings.maxEmitterRadius = .4f;
 	settings.color = { 1.f,1.f,1.f, .6f };
 
-	m_pParticleEmitterComponent = pModel->AddComponent(new ParticleEmitterComponent(L"Textures/Bobo_Body.png", settings));
+	m_pParticleEmitterComponent = pFireEffect->AddComponent(new ParticleEmitterComponent(L"Textures/Bobo_Fire.png", settings));
 }
 
 void BoboPrefab::PostInitialize(const SceneContext&)

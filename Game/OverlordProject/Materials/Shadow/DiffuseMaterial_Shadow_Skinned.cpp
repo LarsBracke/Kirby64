@@ -11,6 +11,11 @@ void DiffuseMaterial_Shadow_Skinned::SetDiffuseTexture(const std::wstring& asset
 	SetVariable_Texture(L"gDiffuseMap", m_pDiffuseTexture);
 }
 
+void DiffuseMaterial_Shadow_Skinned::SetUseTextureAlpha(bool value)
+{
+	SetVariable_Scalar(L"gUseTextureAlpha", value);
+}
+
 void DiffuseMaterial_Shadow_Skinned::InitializeEffectVariables()
 {
 }
