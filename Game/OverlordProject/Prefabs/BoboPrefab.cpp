@@ -2,6 +2,7 @@
 #include "BoboPrefab.h"
 
 #include "Materials/Shadow/DiffuseMaterial_Shadow.h"
+#include "Materials/Shadow/DiffuseMaterial_Shadow_Skinned.h"
 
 BoboPrefab::BoboPrefab()
 	: m_pPhysicsMaterial(PxGetPhysics().createMaterial(0.5f,0.5f,0.5f))
@@ -14,6 +15,7 @@ BoboPrefab::~BoboPrefab()
 {
 	auto* pActor = GetComponent<ControllerComponent>()->GetPxController()->getActor();
 	SceneManager::Get()->GetActiveScene()->GetPhysxProxy()->GetPhysxScene()->removeActor(*pActor);
+	m_pGameManager->UnRegisterEnemy(this);
 }
 
 void BoboPrefab::Initialize(const SceneContext&)
@@ -22,14 +24,16 @@ void BoboPrefab::Initialize(const SceneContext&)
 	auto* pModel = new GameObject();
 	AddChild(pModel);
 	m_pModelComponent = pModel->AddComponent(new ModelComponent(L"Meshes/Bobo.ovm"));
+	pModel->GetTransform()->Translate(2, 0, 0);
+	GetTransform()->Rotate(0, 0, -90);
 
-	auto* pBodyMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
+	auto* pBodyMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow_Skinned>();
 	pBodyMaterial->SetDiffuseTexture(L"Textures/Bobo_Body.png");
 
-	auto* pFeetMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
+	auto* pFeetMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow_Skinned>();
 	pFeetMaterial->SetDiffuseTexture(L"Textures/Bobo_Feet.png");
 
-	auto* pEyesMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
+	auto* pEyesMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow_Skinned>();
 	pEyesMaterial->SetDiffuseTexture(L"Textures/Bobo_Eyes.png");
 
 	m_pModelComponent->SetMaterial(pFeetMaterial, 0);
@@ -65,6 +69,9 @@ void BoboPrefab::PostInitialize(const SceneContext&)
 {
 	/*register enemy*/
 	GameManager::Get()->RegisterEnemy(this);
+
+	/*animations*/
+	m_pModelComponent->GetAnimator()->Play();
 }
 
 void BoboPrefab::Update(const SceneContext& sceneContext)
