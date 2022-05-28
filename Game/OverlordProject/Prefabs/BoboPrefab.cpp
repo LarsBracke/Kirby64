@@ -89,4 +89,21 @@ void BoboPrefab::MoveToKirby(const SceneContext& sceneContext)
 	XMFLOAT3 displacement{ };
 	displacement.x = toKirby.x * m_Speed * sceneContext.pGameTime->GetElapsed();
 	m_pControllerComponent->Move(displacement);
+
+	if (abs(displacement.x) > 0.01f)
+		SetAnimationState(AnimationState::Running);
+	else
+		SetAnimationState(AnimationState::Idle);
 }
+
+void BoboPrefab::SetAnimationState(AnimationState newState)
+{
+	if (m_CurrentAnimationState == newState)
+		return;
+
+	m_CurrentAnimationState = newState;
+	m_pModelComponent->GetAnimator()->SetAnimation(static_cast<UINT>(newState));
+	m_pModelComponent->GetAnimator()->Reset();
+	m_pModelComponent->GetAnimator()->Play();
+}
+

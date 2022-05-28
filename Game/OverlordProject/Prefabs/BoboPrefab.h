@@ -37,5 +37,14 @@ private:
 
 	const float m_AttackRange{ 25.f };
 	const float m_Speed{ 5.f };
+
+	enum class AnimationState : UINT
+	{
+		Idle,
+		Running
+	};
+
+	AnimationState m_CurrentAnimationState{ AnimationState::Idle };
+	void SetAnimationState(AnimationState newState);
 };
 
