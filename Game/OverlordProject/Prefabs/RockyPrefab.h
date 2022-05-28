@@ -18,7 +18,7 @@ protected:
 	void Update(const SceneContext&) override;
 
 private:
-	void MoveToKirby(const SceneContext& sceneContext) const;
+	void MoveToKirby(const SceneContext& sceneContext);
 
 	GameManager* m_pGameManager{ nullptr };
 
@@ -31,5 +31,14 @@ private:
 
 	const float m_AttackRange{ 33.33f };
 	const float m_Speed{ 3.33f };
+
+	enum class AnimationState : UINT
+	{
+		Idle,
+		Running
+	};
+
+	AnimationState m_CurrentAnimationState{ AnimationState::Idle };
+	void SetAnimationState(AnimationState newState);
 };
 

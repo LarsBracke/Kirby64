@@ -62,12 +62,12 @@ void PopStarOne::Initialize()
 
 	/*bobo*/
 	auto* pBobo = new BoboPrefab();
-	pBobo->GetTransform()->Translate(25, 2, 0);
+	pBobo->GetTransform()->Translate(50, 2, 0);
 	AddChild(pBobo);
 
 	/*rocky*/
 	auto* pRocky = new RockyPrefab();
-	pRocky->GetTransform()->Translate(50, 2, 0);
+	pRocky->GetTransform()->Translate(25, 2, 0);
 	AddChild(pRocky);
 
 	/*HUD*/

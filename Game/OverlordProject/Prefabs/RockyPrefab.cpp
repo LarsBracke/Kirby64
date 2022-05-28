@@ -50,6 +50,10 @@ void RockyPrefab::PostInitialize(const SceneContext&)
 {
 	/*register*/
 	m_pGameManager->RegisterEnemy(this);
+
+	/*animation*/
+	m_pModelComponent->GetAnimator()->SetAnimation(1);
+	m_pModelComponent->GetAnimator()->Play();
 }
 
 void RockyPrefab::Update(const SceneContext& sceneContext)
@@ -58,7 +62,7 @@ void RockyPrefab::Update(const SceneContext& sceneContext)
 		MoveToKirby(sceneContext);
 }
 
-void RockyPrefab::MoveToKirby(const SceneContext& sceneContext) const
+void RockyPrefab::MoveToKirby(const SceneContext& sceneContext)
 {
 	const XMVECTOR kirbyPos = XMLoadFloat3(&m_pGameManager->GetKirbyPosition());
 	const XMVECTOR myPos = XMLoadFloat3(&GetTransform()->GetPosition());
@@ -67,4 +71,21 @@ void RockyPrefab::MoveToKirby(const SceneContext& sceneContext) const
 	XMFLOAT3 displacement{ };
 	displacement.x = toKirby.x * m_Speed * sceneContext.pGameTime->GetElapsed();
 	m_pControllerComponent->Move(displacement);
+
+	//if (abs(displacement.x) > 0.01f)
+	//	SetAnimationState(AnimationState::Running);
+	//else
+	//	SetAnimationState(AnimationState::Idle);
 }
+
+void RockyPrefab::SetAnimationState(AnimationState newState)
+{
+	if (m_CurrentAnimationState == newState)
+		return;
+
+	m_CurrentAnimationState = newState;
+	m_pModelComponent->GetAnimator()->SetAnimation(static_cast<UINT>(newState));
+	m_pModelComponent->GetAnimator()->Reset();
+	m_pModelComponent->GetAnimator()->Play();
+}
+
