@@ -16,9 +16,12 @@ protected:
 private:
 	// Components
 	ModelComponent* m_pModelComponent{ nullptr };
+	RigidBodyComponent* m_pRigidBodyComponent{ nullptr };
 
 	// Movement
 	XMFLOAT3 m_LaunchDirection{ };
 	const float m_LaunchSpeed{ 0.5f };
+
+	bool m_ObjectHit{ false };
 };
 

@@ -58,6 +58,7 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 		{
 			if (m_IsInhaling)
 			{
+				// TODO: do not us heap memory
 				m_pInhaledEnemy = new AbilityType(pEnemyComponent->GetAbilityType());
 				pEnemyComponent->Kill();
 			}

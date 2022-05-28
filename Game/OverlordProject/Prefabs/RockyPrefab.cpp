@@ -52,7 +52,7 @@ void RockyPrefab::PostInitialize(const SceneContext&)
 	m_pGameManager->RegisterEnemy(this);
 
 	/*animation*/
-	m_pModelComponent->GetAnimator()->SetAnimation(1);
+	m_pModelComponent->GetAnimator()->SetAnimation(0);
 	m_pModelComponent->GetAnimator()->Play();
 }
 
@@ -72,10 +72,10 @@ void RockyPrefab::MoveToKirby(const SceneContext& sceneContext)
 	displacement.x = toKirby.x * m_Speed * sceneContext.pGameTime->GetElapsed();
 	m_pControllerComponent->Move(displacement);
 
-	//if (abs(displacement.x) > 0.01f)
-	//	SetAnimationState(AnimationState::Running);
-	//else
-	//	SetAnimationState(AnimationState::Idle);
+	if (abs(displacement.x) > 0.01f)
+		SetAnimationState(AnimationState::Running);
+	else
+		SetAnimationState(AnimationState::Idle);
 }
 
 void RockyPrefab::SetAnimationState(AnimationState newState)
