@@ -42,6 +42,7 @@
     <ClCompile Include="Prefabs\StarPrefab.cpp" />
     <ClCompile Include="Scenes\Game\PopStarOne.cpp" />
     <ClCompile Include="Prefabs\InGameHudPrefab.cpp" />
+    <ClCompile Include="Prefabs\RockyPrefab.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />
@@ -86,5 +87,6 @@
     <ClInclude Include="Prefabs\StarPrefab.h" />
     <ClInclude Include="Scenes\Game\PopStarOne.h" />
     <ClInclude Include="Prefabs\InGameHudPrefab.h" />
+    <ClInclude Include="Prefabs\RockyPrefab.h" />
   </ItemGroup>
 </Project>

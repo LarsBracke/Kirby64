@@ -7,7 +7,7 @@
 #include "Prefabs/CubePrefab.h"
 #include "Prefabs/KirbyPrefab.h"
 #include "Prefabs/BoboPrefab.h"
-//#include "Prefabs/RockyPrefab.h"
+#include "Prefabs/RockyPrefab.h"
 #include "Prefabs/InGameHudPrefab.h"
 
 void PopStarOne::Initialize()
@@ -65,10 +65,10 @@ void PopStarOne::Initialize()
 	pBobo->GetTransform()->Translate(25, 2, 0);
 	AddChild(pBobo);
 
-	///*rocky*/
-	//auto* pRocky = new RockyPrefab();
-	//pRocky->GetTransform()->Translate(50, 2, 0);
-	//AddChild(pRocky);
+	/*rocky*/
+	auto* pRocky = new RockyPrefab();
+	pRocky->GetTransform()->Translate(50, 2, 0);
+	AddChild(pRocky);
 
 	/*HUD*/
 	auto* pHUD = new InGameHudPrefab();
