@@ -7,6 +7,7 @@
 #include "Prefabs/CubePrefab.h"
 #include "Prefabs/KirbyPrefab.h"
 #include "Prefabs/BoboPrefab.h"
+//#include "Prefabs/RockyPrefab.h"
 #include "Prefabs/InGameHudPrefab.h"
 
 void PopStarOne::Initialize()
@@ -64,6 +65,11 @@ void PopStarOne::Initialize()
 	pBobo->GetTransform()->Translate(25, 2, 0);
 	AddChild(pBobo);
 
+	///*rocky*/
+	//auto* pRocky = new RockyPrefab();
+	//pRocky->GetTransform()->Translate(50, 2, 0);
+	//AddChild(pRocky);
+
 	/*HUD*/
 	auto* pHUD = new InGameHudPrefab();
 	AddChild(pHUD);
@@ -73,8 +79,29 @@ void PopStarOne::Initialize()
 	pCube->AddComponent(new RigidBodyComponent())->AddCollider(PxBoxGeometry{ 2.5f,2.5f,2.5f }, *pDefaultMaterial);
 	pCube->GetTransform()->Translate(10, 5, 0);
 	AddChild(pCube);
+
+	/*camera*/
+	m_pCamera = new FixedCamera();
+	AddChild(m_pCamera);
+}
+
+void PopStarOne::PostInitialize()
+{
+	m_pCameraComponent = m_pCamera->GetComponent<CameraComponent>();
+	m_pCameraComponent->SetActive(true);
 }
 
 void PopStarOne::Update()
 {
+	HandleCameraMovement();
+}
+
+void PopStarOne::HandleCameraMovement()
+{
+	const XMFLOAT3 kirbyPos = GameManager::Get()->GetKirbyPosition();
+	const XMFLOAT3 cameraPos = m_pCamera->GetTransform()->GetPosition();
+	const XMFLOAT3 newPos{ kirbyPos.x + m_CameraOffset.x, kirbyPos.y + m_CameraOffset.y, kirbyPos.z + m_CameraOffset.z };
+
+	m_pCamera->GetTransform()->Rotate(m_CameraRotation);
+	m_pCamera->GetTransform()->Translate(newPos);
 }
