@@ -23,6 +23,7 @@ private:
 private:
 	FixedCamera* m_pCamera{ nullptr };
 	CameraComponent* m_pCameraComponent{ nullptr };
+	const XMFLOAT3 m_LightDirection{ 0.740129888f, -0.597205281f, 0.309117377f };
 	XMFLOAT3 m_CameraPosition{ };
 	const XMFLOAT3 m_CameraRotation{ 20.0f, -20.0f, 0.0f };
 	const XMFLOAT3 m_CameraOffset{ 15.0f, 10.0f, -30.0f };

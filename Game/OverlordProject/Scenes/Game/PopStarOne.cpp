@@ -4,11 +4,14 @@
 #include "Helpers/GameManager.h"
 #include "Materials/DiffuseMaterial.h"
 #include "Materials/Shadow/DiffuseMaterial_Shadow.h"
+#include "Misc/ShadowMapMaterial.h"
 #include "Prefabs/CubePrefab.h"
 #include "Prefabs/KirbyPrefab.h"
 #include "Prefabs/BoboPrefab.h"
 #include "Prefabs/RockyPrefab.h"
 #include "Prefabs/InGameHudPrefab.h"
+
+class ShadowMapMaterial;
 
 void PopStarOne::Initialize()
 {
@@ -18,9 +21,6 @@ void PopStarOne::Initialize()
 	/*ground plane*/
 	const auto pDefaultMaterial = PxGetPhysics().createMaterial(0.5f, 0.5f, 0.5f);
 	GameSceneExt::CreatePhysXGroundPlane(*this, pDefaultMaterial);
-
-	/*set light*/
-	m_SceneContext.pLights->SetDirectionalLight({ -95.6139526f,66.1346436f,-41.1850471f }, { 0.740129888f, -0.597205281f, 0.309117377f });
 
 	/*stage*/
 	auto* pLevel = new GameObject();
@@ -56,14 +56,14 @@ void PopStarOne::Initialize()
 	pModelComponent->SetMaterial(pMaterial);
 	pLevel->AddChild(pSky);
 
-	auto* pBackgroundProps = new GameObject();
-	pBackgroundProps->GetTransform()->Translate(0, 5, 75);
-	pBackgroundProps->GetTransform()->Rotate(0, 90, 0);
-	pBackgroundProps->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
-	pModelComponent = pBackgroundProps->AddComponent(new ModelComponent(L"Meshes/BackgroundProps.ovm"));
-	pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial>();
-	pModelComponent->SetMaterial(pMaterial);
-	AddChild(pBackgroundProps);
+	//auto* pBackgroundProps = new GameObject();
+	//pBackgroundProps->GetTransform()->Translate(0, 5, 75);
+	//pBackgroundProps->GetTransform()->Rotate(0, 90, 0);
+	//pBackgroundProps->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
+	//pModelComponent = pBackgroundProps->AddComponent(new ModelComponent(L"Meshes/BackgroundProps.ovm"));
+	//pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial>();
+	//pModelComponent->SetMaterial(pMaterial);
+	//AddChild(pBackgroundProps);
 
 
 	/*kirby*/
@@ -109,6 +109,7 @@ void PopStarOne::Update()
 
 void PopStarOne::HandleCameraMovement()
 {
+	// Camera movement
 	const XMFLOAT3 kirbyPos = GameManager::Get()->GetKirbyPosition();
 	const XMFLOAT3 newPos{ kirbyPos.x + m_CameraOffset.x, kirbyPos.y + m_CameraOffset.y, kirbyPos.z + m_CameraOffset.z };
 
@@ -117,4 +118,7 @@ void PopStarOne::HandleCameraMovement()
 
 	m_pCamera->GetTransform()->Rotate(m_CameraRotation);
 	m_pCamera->GetTransform()->Translate(m_CameraPosition);
+
+	// Update light
+	m_SceneContext.pLights->SetDirectionalLight(m_pCamera->GetTransform()->GetPosition(), m_LightDirection);
 }
