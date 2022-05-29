@@ -76,11 +76,13 @@ private:
 	enum class AnimationState : UINT
 	{
 		Idle,
-		Running
+		Running,
+		Jump,
+		Inhaling
 	};
 
 	AnimationState m_CurrentAnimationState{ AnimationState::Idle };
-	void SetAnimationState(AnimationState newState, float speed = 1.0f);
+	void SetAnimationState(AnimationState newState, bool forceAnimationChange = false);
 
 	// Inhaling
 	bool m_IsInhaling{ false };

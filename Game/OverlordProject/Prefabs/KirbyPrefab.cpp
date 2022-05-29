@@ -190,10 +190,13 @@ void KirbyPrefab::HandleMovement(const SceneContext& sceneContext)
 	m_pController->Move(displacement);
 
 	/*animations*/
-	if (abs(displacement.x) > 0.01f)
-		SetAnimationState(AnimationState::Running, 5.0f);
-	else
-		SetAnimationState(AnimationState::Idle);
+	if (!m_IsInhaling)
+	{
+		if (abs(displacement.x) > 0.01f)
+			SetAnimationState(AnimationState::Running);
+		else
+			SetAnimationState(AnimationState::Idle);
+	}
 
 	/*collider movement*/
 	m_pRigidBodyComponent->GetTransform()->Translate(GetTransform()->GetPosition());
@@ -213,11 +216,13 @@ void KirbyPrefab::HandleInhaling(const SceneContext& sceneContext)
 	{
 		m_IsInhaling = true;
 		AddChild(m_pParticleObject);
+		SetAnimationState(AnimationState::Inhaling);
 	}
 	if (sceneContext.pInput->IsActionTriggered(StopInhale))
 	{
 		m_IsInhaling = false;
 		RemoveChild(m_pParticleObject);
+		SetAnimationState(AnimationState::Idle);
 	}
 
 	if (!m_IsInhaling)
@@ -267,14 +272,13 @@ void KirbyPrefab::PushBack(const SceneContext& sceneContext, const GameObject* p
 		m_pController->Move(XMFLOAT3{ m_PushBackSpeed * sceneContext.pGameTime->GetElapsed(), 0 ,0 });
 }
 
-void KirbyPrefab::SetAnimationState(AnimationState newState, float speed)
+void KirbyPrefab::SetAnimationState(AnimationState newState, bool forceAnimationChange)
 {
-	if (m_CurrentAnimationState == newState)
+	if (m_CurrentAnimationState == newState && !forceAnimationChange)
 		return;
 
 	m_CurrentAnimationState = newState;
 	m_pModelComponent->GetAnimator()->SetAnimation(static_cast<UINT>(newState));
-	m_pModelComponent->GetAnimator()->SetAnimationSpeed(speed);
 	m_pModelComponent->GetAnimator()->Reset();
 	m_pModelComponent->GetAnimator()->Play();
 }
