@@ -17,6 +17,10 @@ void PopStarOne::Initialize()
 {
 	/*settings*/
 	m_SceneContext.settings.drawGrid = true;
+	m_SceneContext.settings.enableOnGUI = true;
+
+	/*light*/
+	m_SceneContext.pLights->SetDirectionalLight({ -350, 285, -100 }, { 0.740129888f, -0.597205281f, 0.309117377f });
 
 	/*ground plane*/
 	const auto pDefaultMaterial = PxGetPhysics().createMaterial(0.5f, 0.5f, 0.5f);
@@ -31,7 +35,7 @@ void PopStarOne::Initialize()
 	pGroundPlane->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
 	pGroundPlane->GetTransform()->Translate(0, 3, 75);
 	auto* pModelComponent = pGroundPlane->AddComponent(new ModelComponent(L"Meshes/GroundPlane.ovm"));
-	auto* pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial>();
+	auto* pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
 	pMaterial->SetDiffuseTexture(L"Textures/GroundPlane.png");
 	pModelComponent->SetMaterial(pMaterial);
 	pLevel->AddChild(pGroundPlane);
@@ -41,7 +45,7 @@ void PopStarOne::Initialize()
 	pPath->GetTransform()->Rotate(0, 90, 0);
 	pPath->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
 	pModelComponent = pPath->AddComponent(new ModelComponent(L"Meshes/Path.ovm"));
-	pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial>();
+	pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
 	pMaterial->SetDiffuseTexture(L"Textures/Path.png");
 	pModelComponent->SetMaterial(pMaterial);
 	pLevel->AddChild(pPath);
@@ -51,9 +55,9 @@ void PopStarOne::Initialize()
 	pSky->GetTransform()->Rotate(0, 0, 90);
 	pSky->GetTransform()->Translate(0, 33.33f, 175);
 	pModelComponent = pSky->AddComponent(new ModelComponent(L"Meshes/Sky.ovm"));
-	pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial>();
-	pMaterial->SetDiffuseTexture(L"Textures/Sky.png");
-	pModelComponent->SetMaterial(pMaterial);
+	auto* pSkyMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial>();
+	pSkyMaterial->SetDiffuseTexture(L"Textures/Sky.png");
+	pModelComponent->SetMaterial(pSkyMaterial);
 	pLevel->AddChild(pSky);
 
 	//auto* pBackgroundProps = new GameObject();
@@ -107,6 +111,15 @@ void PopStarOne::Update()
 	HandleCameraMovement();
 }
 
+void PopStarOne::OnGUI()
+{
+	static XMFLOAT3 pos{ -69.f, 35.f, 0.f };
+	static XMFLOAT3 rot{  0.433f, -0.597f, 1.192f  };
+	ImGui::SliderFloat3("Light Position", ConvertUtil::ToImFloatPtr(pos), -500, 500);
+	ImGui::SliderFloat3("Light Rotation", ConvertUtil::ToImFloatPtr(rot), 0, 2*XM_PI);
+	m_SceneContext.pLights->SetDirectionalLight(pos, rot);
+}
+
 void PopStarOne::HandleCameraMovement()
 {
 	// Camera movement
@@ -119,6 +132,7 @@ void PopStarOne::HandleCameraMovement()
 	m_pCamera->GetTransform()->Rotate(m_CameraRotation);
 	m_pCamera->GetTransform()->Translate(m_CameraPosition);
 
-	// Update light
-	m_SceneContext.pLights->SetDirectionalLight(m_pCamera->GetTransform()->GetPosition(), m_LightDirection);
+	//// Update light
+	//m_SceneContext.pLights->SetDirectionalLight(m_pCamera->GetTransform()->GetPosition(), m_LightDirection);
+	
 }

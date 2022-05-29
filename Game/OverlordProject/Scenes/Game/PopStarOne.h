@@ -17,6 +17,7 @@ private:
 	void Initialize() override;
 	void PostInitialize() override;
 	void Update() override;
+	void OnGUI() override;
 
 	void HandleCameraMovement();
 
