@@ -95,6 +95,23 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 
 	/*health*/
 	m_pHealthComponent = AddComponent(new HealthComponent(10));
+
+	/*particles*/
+	ParticleEmitterSettings settings{ };
+	settings.velocity = { -m_ParticleSpeed,0.f,0.f };
+	settings.minSize = 0.75f;
+	settings.maxSize = 1.0f;
+	settings.minEnergy = 0.2f;
+	settings.maxEnergy = 0.25f;
+	settings.minScale = 3.5f;
+	settings.maxScale = 4.0f;
+	settings.minEmitterRadius = 2.5f;
+	settings.maxEmitterRadius = 3.5f;
+	settings.color = { 1.f,1.f,1.f, .75f };
+
+	m_pParticleObject = new GameObject();
+	m_pParticleObject->GetTransform()->Translate(10.f, 0, 0);
+	m_pInhaleParticleSystem = m_pParticleObject->AddComponent(new ParticleEmitterComponent(L"Textures/Inhale.png", settings));
 }
 
 void KirbyPrefab::PostInitialize(const SceneContext&)
@@ -122,13 +139,14 @@ void KirbyPrefab::HandleMovement(const SceneContext& sceneContext)
 		const float displacement = m_CharacterDesc.maxMoveSpeed;
 		m_TotalVelocity.x += displacement;
 		GetTransform()->Rotate(0, 0, 0);
-		;
+		m_pInhaleParticleSystem->GetSettings().velocity.x = -m_ParticleSpeed;
 	}
 	if (sceneContext.pInput->IsActionTriggered(MoveLeft))
 	{
 		const float displacement = m_CharacterDesc.maxMoveSpeed;
 		m_TotalVelocity.x -= displacement;
 		GetTransform()->Rotate(0, 180, 0);
+		m_pInhaleParticleSystem->GetSettings().velocity.x = m_ParticleSpeed;
 	}
 
 	/*gravity*/
@@ -192,9 +210,15 @@ void KirbyPrefab::HandleMovement(const SceneContext& sceneContext)
 void KirbyPrefab::HandleInhaling(const SceneContext& sceneContext)
 {
 	if (sceneContext.pInput->IsActionTriggered(StartInhale))
+	{
 		m_IsInhaling = true;
+		AddChild(m_pParticleObject);
+	}
 	if (sceneContext.pInput->IsActionTriggered(StopInhale))
+	{
 		m_IsInhaling = false;
+		RemoveChild(m_pParticleObject);
+	}
 
 	if (!m_IsInhaling)
 		return;
@@ -207,9 +231,9 @@ void KirbyPrefab::HandleInhaling(const SceneContext& sceneContext)
 	if (!pControllerComponent)
 		return;
 
-	XMVECTOR myPos = XMLoadFloat3(&GetTransform()->GetPosition());
-	XMVECTOR enemyPos = XMLoadFloat3(&pClosestEnemy->GetTransform()->GetPosition());
-	XMVECTOR toMe = XMVector3Normalize(XMVectorSubtract(myPos, enemyPos));
+	const XMVECTOR myPos = XMLoadFloat3(&GetTransform()->GetPosition());
+	const XMVECTOR enemyPos = XMLoadFloat3(&pClosestEnemy->GetTransform()->GetPosition());
+	const XMVECTOR toMe = XMVector3Normalize(XMVectorSubtract(myPos, enemyPos));
 	XMFLOAT3 displacement{ };
 	XMStoreFloat3(&displacement, toMe * m_InhaleSpeed * sceneContext.pGameTime->GetElapsed());
 	

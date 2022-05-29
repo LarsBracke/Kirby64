@@ -19,6 +19,7 @@ public:
 
 	GameObject* GetClosestEnemy(float range = 50.0f) const;
 	const XMFLOAT3& GetKirbyPosition() const { return m_pKirby->GetTransform()->GetPosition(); }
+	GameObject* GetKirby() const { return m_pKirby; }
 
 	bool IsKirbyInRange(XMFLOAT3 origin, float range) const;
 

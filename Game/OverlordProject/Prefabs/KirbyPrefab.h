@@ -41,6 +41,8 @@ private:
 	ControllerComponent* m_pController{ nullptr };
 	RigidBodyComponent* m_pRigidBodyComponent{ nullptr };
 	HealthComponent* m_pHealthComponent{ nullptr };
+	ParticleEmitterComponent* m_pInhaleParticleSystem{ nullptr };
+
 
 	// Movement
 	PxMaterial* m_pPhysicsMaterial;
@@ -89,5 +91,9 @@ private:
 
 	// Abilities
 	AbilityType* m_pActiveAbility{ nullptr };
+
+	// Particles
+	GameObject* m_pParticleObject{ nullptr };
+	const float m_ParticleSpeed{ 20.0f };
 };
 
