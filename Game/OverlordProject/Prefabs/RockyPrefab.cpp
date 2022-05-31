@@ -72,6 +72,11 @@ void RockyPrefab::MoveToKirby(const SceneContext& sceneContext)
 	displacement.x = toKirby.x * m_Speed * sceneContext.pGameTime->GetElapsed();
 	m_pControllerComponent->Move(displacement);
 
+	if (displacement.x > 0)
+		GetTransform()->Rotate(0, 180, 0);
+	else
+		GetTransform()->Rotate(0, 0, 0);
+
 	if (abs(displacement.x) > 0.01f)
 		SetAnimationState(AnimationState::Running);
 	else

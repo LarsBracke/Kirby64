@@ -96,6 +96,11 @@ void BoboPrefab::MoveToKirby(const SceneContext& sceneContext)
 	displacement.x = toKirby.x * m_Speed * sceneContext.pGameTime->GetElapsed();
 	m_pControllerComponent->Move(displacement);
 
+	if (displacement.x > 0)
+		GetTransform()->Rotate(0, 180, -90);
+	else
+		GetTransform()->Rotate(0, 0, -90);
+
 	if (abs(displacement.x) > 0.01f)
 		SetAnimationState(AnimationState::Running);
 	else
