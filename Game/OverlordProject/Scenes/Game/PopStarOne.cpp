@@ -60,6 +60,19 @@ void PopStarOne::Initialize()
 	pModelComponent->SetMaterial(pSkyMaterial);
 	pLevel->AddChild(pSky);
 
+	auto* pPathBoxes = new GameObject();
+	pPathBoxes->GetTransform()->Translate(115, 3, 0);
+	pPathBoxes->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
+	pPathBoxes->GetTransform()->Rotate(0, 90, 0);
+	pModelComponent = pPathBoxes->AddComponent(new ModelComponent(L"Meshes/PathBox.ovm"));
+	pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
+	pMaterial->SetDiffuseTexture(L"Textures/PathBox.png");
+	pModelComponent->SetMaterial(pMaterial);
+	//auto* pTriangleMesh = ContentManager::Load<PxTriangleMesh>(L"Meshes/PathBox.ovpt");
+	//auto* pRigidBody = pPathBoxes->AddComponent(new RigidBodyComponent(true));
+	//pRigidBody->AddCollider(PxTriangleMeshGeometry{ pTriangleMesh }, *pDefaultMaterial);
+	AddChild(pPathBoxes);
+
 	/*kirby*/
 	KirbyPrefab* pKirby{ new KirbyPrefab() };
 	pKirby->GetTransform()->Translate(0, 10, 0);
@@ -93,7 +106,7 @@ void PopStarOne::Initialize()
 void PopStarOne::PostInitialize()
 {
 	m_pCameraComponent = m_pCamera->GetComponent<CameraComponent>();
-	m_pCameraComponent->SetActive(true);
+	//m_pCameraComponent->SetActive(true);
 }
 
 void PopStarOne::Update()
