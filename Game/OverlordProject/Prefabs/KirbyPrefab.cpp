@@ -79,12 +79,12 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 	m_CharacterDesc.JumpSpeed = 25.f;
 	m_pController = AddComponent(new ControllerComponent(m_CharacterDesc.controller));
 
-	const InputAction actionMoveRight{ MoveRight, InputState::down, VK_RIGHT, -1 };
-	const InputAction actionMoveLeft{ MoveLeft, InputState::down, VK_LEFT, -1 };
-	const InputAction actionJump{ Jump, InputState::pressed, VK_SPACE };
-	const InputAction actionStartInhale{ StartInhale, InputState::pressed, 'Q', -1 };
-	const InputAction actionStopInhale{ StopInhale, InputState::released, 'Q', -1 };
-	const InputAction actionExhale{ Exhale, InputState::pressed, 'Z' };
+	const InputAction actionMoveRight{ MoveRight, InputState::down, VK_RIGHT, -1, 8 };
+	const InputAction actionMoveLeft{ MoveLeft, InputState::down, VK_LEFT, -1, 4 };
+	const InputAction actionJump{ Jump, InputState::pressed, VK_SPACE, -1, 4096 };
+	const InputAction actionStartInhale{ StartInhale, InputState::pressed, 'Q', -1, 16384 };
+	const InputAction actionStopInhale{ StopInhale, InputState::released, 'Q', -1, 16384  };
+	const InputAction actionExhale{ Exhale, InputState::pressed, 'Z', 8192 };
 
 	sceneContext.pInput->AddInputAction(actionMoveRight);
 	sceneContext.pInput->AddInputAction(actionMoveLeft);
