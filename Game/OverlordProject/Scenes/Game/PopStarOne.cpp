@@ -60,16 +60,6 @@ void PopStarOne::Initialize()
 	pModelComponent->SetMaterial(pSkyMaterial);
 	pLevel->AddChild(pSky);
 
-	//auto* pBackgroundProps = new GameObject();
-	//pBackgroundProps->GetTransform()->Translate(0, 5, 75);
-	//pBackgroundProps->GetTransform()->Rotate(0, 90, 0);
-	//pBackgroundProps->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
-	//pModelComponent = pBackgroundProps->AddComponent(new ModelComponent(L"Meshes/BackgroundProps.ovm"));
-	//pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial>();
-	//pModelComponent->SetMaterial(pMaterial);
-	//AddChild(pBackgroundProps);
-
-
 	/*kirby*/
 	KirbyPrefab* pKirby{ new KirbyPrefab() };
 	pKirby->GetTransform()->Translate(0, 10, 0);
@@ -113,11 +103,11 @@ void PopStarOne::Update()
 
 void PopStarOne::OnGUI()
 {
-	static XMFLOAT3 pos{ -69.f, 35.f, 0.f };
-	static XMFLOAT3 rot{  0.433f, -0.597f, 1.192f  };
-	ImGui::SliderFloat3("Light Position", ConvertUtil::ToImFloatPtr(pos), -500, 500);
-	ImGui::SliderFloat3("Light Rotation", ConvertUtil::ToImFloatPtr(rot), 0, 2*XM_PI);
-	m_SceneContext.pLights->SetDirectionalLight(pos, rot);
+	//static XMFLOAT3 pos{ -69.f, 35.f, 0.f };
+	//static XMFLOAT3 rot{  0.433f, -0.597f, 1.192f  };
+	//ImGui::SliderFloat3("Light Position", ConvertUtil::ToImFloatPtr(pos), -500, 500);
+	//ImGui::SliderFloat3("Light Rotation", ConvertUtil::ToImFloatPtr(rot), 0, 2*XM_PI);
+	//m_SceneContext.pLights->SetDirectionalLight(pos, rot);
 }
 
 void PopStarOne::HandleCameraMovement()
@@ -132,7 +122,8 @@ void PopStarOne::HandleCameraMovement()
 	m_pCamera->GetTransform()->Rotate(m_CameraRotation);
 	m_pCamera->GetTransform()->Translate(m_CameraPosition);
 
-	//// Update light
-	//m_SceneContext.pLights->SetDirectionalLight(m_pCamera->GetTransform()->GetPosition(), m_LightDirection);
+	// Update light
+	const XMFLOAT3 lightPos{ newPos.x + m_LightOffset.x, m_LightOffset.y, m_LightOffset.z };
+	m_SceneContext.pLights->SetDirectionalLight(lightPos, m_LightRotation);
 	
 }
