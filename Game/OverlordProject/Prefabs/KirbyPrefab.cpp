@@ -141,6 +141,7 @@ void KirbyPrefab::Update(const SceneContext& sceneContext)
 	HandleMovement(sceneContext);
 	HandleInhaling(sceneContext);
 	HandleExhaling(sceneContext);
+	HandleAnimations(sceneContext);
 	HandleAudio(sceneContext);
 }
 
@@ -204,7 +205,7 @@ void KirbyPrefab::HandleMovement(const SceneContext& sceneContext)
 	m_pController->Move(displacement);
 
 	/*animations*/
-	if (!m_IsInhaling)
+	if (!m_IsInhaling && isGrounded)
 	{
 		if (abs(displacement.x) > 0.01f)
 			SetAnimationState(AnimationState::Running);
@@ -230,13 +231,12 @@ void KirbyPrefab::HandleInhaling(const SceneContext& sceneContext)
 	{
 		m_IsInhaling = true;
 		AddChild(m_pParticleObject);
-		SetAnimationState(AnimationState::Inhaling);
 	}
 	if (sceneContext.pInput->IsActionTriggered(StopInhale))
 	{
 		m_IsInhaling = false;
+		m_IsInhaling = false;
 		RemoveChild(m_pParticleObject);
-		SetAnimationState(AnimationState::Idle);
 	}
 
 	if (!m_IsInhaling)
@@ -270,14 +270,12 @@ void KirbyPrefab::HandleExhaling(const SceneContext& sceneContext)
 
 		m_pInhaledEnemy = nullptr;
 	}
-
-	
 }
 
 void KirbyPrefab::HandleAudio(const SceneContext& sceneContext)
 {
 	auto* pSoundSystem = SoundManager::Get()->GetSystem();
-	if (sceneContext.pInput->IsActionTriggered(Jump))
+	if (sceneContext.pInput->IsActionTriggered(Jump) && m_JumpCount > 0)
 	{
 		pSoundSystem->playSound(m_pSoundJump, nullptr, false, &m_pAudioChannel);
 	}
@@ -289,6 +287,17 @@ void KirbyPrefab::HandleAudio(const SceneContext& sceneContext)
 	{
 		pSoundSystem->playSound(m_pSoundInhale, nullptr, true, &m_pAudioChannel);
 	}
+}
+
+void KirbyPrefab::HandleAnimations(const SceneContext& sceneContext)
+{
+	if (sceneContext.pInput->IsActionTriggered(Jump) && m_JumpCount > 0)
+		SetAnimationState(AnimationState::Jump, true);
+
+	if (sceneContext.pInput->IsActionTriggered(StartInhale))
+		SetAnimationState(AnimationState::Inhaling);
+	else if (sceneContext.pInput->IsActionTriggered(StopInhale))
+		SetAnimationState(AnimationState::Idle);
 }
 
 void KirbyPrefab::PushBack(const SceneContext& sceneContext, const GameObject* pOther)

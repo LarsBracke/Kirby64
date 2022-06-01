@@ -30,6 +30,7 @@ private:
 	void HandleInhaling(const SceneContext& sceneContext);
 	void HandleExhaling(const SceneContext& sceneContext);
 	void HandleAudio(const SceneContext& sceneContext);
+	void HandleAnimations(const SceneContext& sceneContext);
 
 	void PushBack(const SceneContext& sceneContext, const GameObject* pOther);
 
