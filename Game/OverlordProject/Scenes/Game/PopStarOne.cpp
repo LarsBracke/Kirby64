@@ -82,11 +82,11 @@ void PopStarOne::Initialize()
 	AddChild(pKirby);
 
 	/*bobo*/
-	SpawnBobo(XMFLOAT3{ -125, 2, 0 });
-	SpawnBobo(XMFLOAT3{ 50, 2, 0 });
-	SpawnBobo(XMFLOAT3{ 100, 2, 0 });
-	SpawnBobo(XMFLOAT3{ 125, 2, 0 });
-	SpawnBobo(XMFLOAT3{ 175, 2, 0 });
+	//SpawnBobo(XMFLOAT3{ -125, 2, 0 });
+	//SpawnBobo(XMFLOAT3{ 50, 2, 0 });
+	//SpawnBobo(XMFLOAT3{ 100, 2, 0 });
+	//SpawnBobo(XMFLOAT3{ 125, 2, 0 });
+	//SpawnBobo(XMFLOAT3{ 175, 2, 0 });
 
 	/*rocky*/
 	SpawnRocky(XMFLOAT3{ -175,2,0 });
