@@ -109,6 +109,16 @@ void PopStarOne::Initialize()
 	/*camera*/
 	m_pCamera = new FixedCamera();
 	AddChild(m_pCamera);
+
+	/*audio*/
+	auto* pFmodSystem = SoundManager::Get()->GetSystem();
+	FMOD::Sound* pMusic{ nullptr };
+	auto result = pFmodSystem->createStream("Resources/Audio/Music.mp3", FMOD_DEFAULT, nullptr, &pMusic);
+	HANDLE_ERROR(result);
+	pMusic->setMode(FMOD_LOOP_NORMAL);
+	result = pFmodSystem->playSound(pMusic, nullptr, false, &m_pMusicChannel);
+	HANDLE_ERROR(result);
+	m_pMusicChannel->setVolume(0.1f);
 }
 
 void PopStarOne::PostInitialize()

@@ -25,6 +25,7 @@ private:
 	GameObject* SpawnRocky(const XMFLOAT3& spawnLocation);
 
 private:
+	// Camera
 	FixedCamera* m_pCamera{ nullptr };
 	CameraComponent* m_pCameraComponent{ nullptr };
 	const XMFLOAT3 m_LightDirection{ 0.740129888f, -0.597205281f, 0.309117377f };
@@ -33,7 +34,11 @@ private:
 	const XMFLOAT3 m_CameraOffset{ 15.0f, 10.0f, -30.0f };
 	const float m_CameraSnapSpeed{ 2.5f };
 
+	// Lighting
 	const XMFLOAT3 m_LightOffset{ -69.f, 35.f, 0.f  };
 	const XMFLOAT3 m_LightRotation{ .433f, -0.597f, 1.192f };
+
+	// Audio
+	FMOD::Channel* m_pMusicChannel{ nullptr };
 };
 
