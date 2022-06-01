@@ -2,16 +2,18 @@
 #include "PopStarOne.h"
 
 #include "Helpers/GameManager.h"
+
 #include "Materials/DiffuseMaterial.h"
 #include "Materials/Shadow/DiffuseMaterial_Shadow.h"
-#include "Misc/ShadowMapMaterial.h"
+
+#include "Materials/Post/PostBlur.h"
+#include "Materials/Post/PostOutline.h"
+
 #include "Prefabs/CubePrefab.h"
 #include "Prefabs/KirbyPrefab.h"
 #include "Prefabs/BoboPrefab.h"
 #include "Prefabs/RockyPrefab.h"
 #include "Prefabs/InGameHudPrefab.h"
-
-class ShadowMapMaterial;
 
 void PopStarOne::Initialize()
 {
@@ -111,6 +113,10 @@ void PopStarOne::PostInitialize()
 {
 	m_pCameraComponent = m_pCamera->GetComponent<CameraComponent>();
 	m_pCameraComponent->SetActive(true);
+
+
+	/*post processing*/
+	AddPostProcessingEffect(MaterialManager::Get()->CreateMaterial<PostOutline>());
 }
 
 void PopStarOne::Update()

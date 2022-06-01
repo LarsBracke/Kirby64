@@ -96,6 +96,7 @@
     <ClCompile Include="Components\EnemyComponent.cpp" />
     <ClCompile Include="Materials\Post\PostBlur.cpp" />
     <ClCompile Include="Materials\Post\PostGrayscale.cpp" />
+    <ClCompile Include="Materials\Post\PostOutline.cpp" />
     <ClCompile Include="Scenes\Game\MainMenu.cpp" />
     <ClCompile Include="Prefabs\InGameHudPrefab.cpp" />
     <ClCompile Include="Prefabs\BoboPrefab.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Components\EnemyComponent.h" />
     <ClInclude Include="Materials\Post\PostBlur.h" />
     <ClInclude Include="Materials\Post\PostGrayscale.h" />
+    <ClInclude Include="Materials\Post\PostOutline.h" />
     <ClInclude Include="Scenes\Game\MainMenu.h" />
     <ClInclude Include="Prefabs\InGameHudPrefab.h" />
     <ClInclude Include="Misc\AbilityType.h" />
