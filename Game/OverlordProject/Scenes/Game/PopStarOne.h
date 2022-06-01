@@ -23,6 +23,7 @@ private:
 
 	GameObject* SpawnBobo(const XMFLOAT3& spawnLocation);
 	GameObject* SpawnRocky(const XMFLOAT3& spawnLocation);
+	void SpawnBackGroundBoxes();
 
 private:
 	// Camera

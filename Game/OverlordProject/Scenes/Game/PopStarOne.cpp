@@ -60,21 +60,7 @@ void PopStarOne::Initialize()
 	pModelComponent->SetMaterial(pSkyMaterial);
 	pLevel->AddChild(pSky);
 
-	//auto* pPathBoxes = new GameObject();
-	//pModelComponent = pPathBoxes->AddComponent(new ModelComponent(L"Meshes/PathBox.ovm"));
-	//pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
-	//pMaterial->SetDiffuseTexture(L"Textures/PathBox.png");
-	//pModelComponent->SetMaterial(pMaterial);
-
-	//auto* pTriangleMesh = ContentManager::Load<PxTriangleMesh>(L"Meshes/PathBox.ovpt");
-	//auto* pRigidBody = pPathBoxes->AddComponent(new RigidBodyComponent(false));
-	//pRigidBody->SetKinematic(true);
-	//pRigidBody->AddCollider(PxTriangleMeshGeometry{ pTriangleMesh }, *pDefaultMaterial);
-
-	//pPathBoxes->GetTransform()->Translate(115, 3, 0);
-	//pPathBoxes->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
-	//pPathBoxes->GetTransform()->Rotate(0, 90, 0);
-	//AddChild(pPathBoxes);
+	SpawnBackGroundBoxes();
 
 	/*kirby*/
 	KirbyPrefab* pKirby{ new KirbyPrefab() };
@@ -82,11 +68,11 @@ void PopStarOne::Initialize()
 	AddChild(pKirby);
 
 	/*bobo*/
-	SpawnBobo(XMFLOAT3{ -125, 2, 0 });
-	SpawnBobo(XMFLOAT3{ 50, 2, 0 });
-	SpawnBobo(XMFLOAT3{ 100, 2, 0 });
-	SpawnBobo(XMFLOAT3{ 125, 2, 0 });
-	SpawnBobo(XMFLOAT3{ 175, 2, 0 });
+	//SpawnBobo(XMFLOAT3{ -125, 2, 0 });
+	//SpawnBobo(XMFLOAT3{ 50, 2, 0 });
+	//SpawnBobo(XMFLOAT3{ 100, 2, 0 });
+	//SpawnBobo(XMFLOAT3{ 125, 2, 0 });
+	//SpawnBobo(XMFLOAT3{ 175, 2, 0 });
 
 	/*rocky*/
 	SpawnRocky(XMFLOAT3{ -175,2,0 });
@@ -177,4 +163,26 @@ GameObject* PopStarOne::SpawnRocky(const XMFLOAT3& spawnLocation)
 	pRocky->GetTransform()->Translate(spawnLocation);
 
 	return pRocky;
+}
+
+void PopStarOne::SpawnBackGroundBoxes()
+{
+	for (UINT count = 0; count < 14; ++count)
+	{
+		constexpr float boxSpacingX = 50.f;
+		constexpr float boxSpacingY = 5.f;
+		constexpr float boxSpacingZ = 25.f;
+		constexpr XMFLOAT3 startPosition{ -230.f, 7.5f, 40.f };
+
+		auto* pBox = AddChild(new GameObject());
+		auto* pModelComponent = pBox->AddComponent(new ModelComponent(L"Meshes/BackgroundBox.ovm"));
+		auto* pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial>();
+		pMaterial->SetDiffuseTexture(L"Textures/BackgroundBox.png");
+		pModelComponent->SetMaterial(pMaterial);
+
+		pBox->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
+
+		XMFLOAT3 boxPosition{ startPosition.x + (count * boxSpacingX), (MathHelper::randF(-1,1) * boxSpacingY) + startPosition.y, (MathHelper::randF(-3,3) * boxSpacingZ) + startPosition.z };
+		pBox->GetTransform()->Translate(boxPosition);
+	}
 }
