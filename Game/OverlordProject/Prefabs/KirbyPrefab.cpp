@@ -123,6 +123,9 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 	result = pSoundSystem->createStream("Resources/Audio/Kirby_Inhale.mp3", FMOD_DEFAULT, nullptr, &m_pSoundInhale);
 	HANDLE_ERROR(result);
 	result = pSoundSystem->createStream("Resources/Audio/Punch.mp3", FMOD_DEFAULT, nullptr, &m_pSoundPunch);
+	HANDLE_ERROR(result);
+	result = pSoundSystem->createStream("Resources/Audio/Star.mp3", FMOD_DEFAULT, nullptr, &m_pSoundStar);
+	HANDLE_ERROR(result);
 
 	m_pAudioChannel->setVolume(0.5f);
 }
@@ -286,6 +289,10 @@ void KirbyPrefab::HandleAudio(const SceneContext& sceneContext)
 	if (sceneContext.pInput->IsActionTriggered(StopInhale))
 	{
 		pSoundSystem->playSound(m_pSoundInhale, nullptr, true, &m_pAudioChannel);
+	}
+	if (sceneContext.pInput->IsActionTriggered(Exhale))
+	{
+		pSoundSystem->playSound(m_pSoundStar, nullptr, false, &m_pAudioChannel);
 	}
 }
 

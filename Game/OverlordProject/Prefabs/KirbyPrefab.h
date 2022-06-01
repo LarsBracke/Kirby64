@@ -107,5 +107,6 @@ private:
 	FMOD::Sound* m_pSoundJump{ nullptr };
 	FMOD::Sound* m_pSoundInhale{ nullptr };
 	FMOD::Sound* m_pSoundPunch{ nullptr };
+	FMOD::Sound* m_pSoundStar{ nullptr };
 };
 
