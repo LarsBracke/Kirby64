@@ -21,6 +21,9 @@ private:
 
 	void HandleCameraMovement();
 
+	GameObject* SpawnBobo(const XMFLOAT3& spawnLocation);
+	GameObject* SpawnRocky(const XMFLOAT3& spawnLocation);
+
 private:
 	FixedCamera* m_pCamera{ nullptr };
 	CameraComponent* m_pCameraComponent{ nullptr };

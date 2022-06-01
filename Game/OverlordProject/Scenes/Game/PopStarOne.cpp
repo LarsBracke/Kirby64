@@ -61,16 +61,20 @@ void PopStarOne::Initialize()
 	pLevel->AddChild(pSky);
 
 	auto* pPathBoxes = new GameObject();
-	pPathBoxes->GetTransform()->Translate(115, 3, 0);
-	pPathBoxes->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
-	pPathBoxes->GetTransform()->Rotate(0, 90, 0);
+
 	pModelComponent = pPathBoxes->AddComponent(new ModelComponent(L"Meshes/PathBox.ovm"));
 	pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
 	pMaterial->SetDiffuseTexture(L"Textures/PathBox.png");
 	pModelComponent->SetMaterial(pMaterial);
+
 	//auto* pTriangleMesh = ContentManager::Load<PxTriangleMesh>(L"Meshes/PathBox.ovpt");
-	//auto* pRigidBody = pPathBoxes->AddComponent(new RigidBodyComponent(true));
+	//auto* pRigidBody = pPathBoxes->AddComponent(new RigidBodyComponent(false));
+	//pRigidBody->SetKinematic(true);
 	//pRigidBody->AddCollider(PxTriangleMeshGeometry{ pTriangleMesh }, *pDefaultMaterial);
+
+	pPathBoxes->GetTransform()->Translate(115, 3, 0);
+	pPathBoxes->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
+	pPathBoxes->GetTransform()->Rotate(0, 90, 0);
 	AddChild(pPathBoxes);
 
 	/*kirby*/
@@ -79,14 +83,19 @@ void PopStarOne::Initialize()
 	AddChild(pKirby);
 
 	/*bobo*/
-	auto* pBobo = new BoboPrefab();
-	pBobo->GetTransform()->Translate(50, 2, 0);
-	AddChild(pBobo);
+	SpawnBobo(XMFLOAT3{ -125, 2, 0 });
+	SpawnBobo(XMFLOAT3{ 50, 2, 0 });
+	SpawnBobo(XMFLOAT3{ 100, 2, 0 });
+	SpawnBobo(XMFLOAT3{ 125, 2, 0 });
+	SpawnBobo(XMFLOAT3{ 175, 2, 0 });
 
 	/*rocky*/
-	auto* pRocky = new RockyPrefab();
-	pRocky->GetTransform()->Translate(25, 2, 0);
-	AddChild(pRocky);
+	SpawnRocky(XMFLOAT3{ -175,2,0 });
+	SpawnRocky(XMFLOAT3{ -50,2,0 });
+	SpawnRocky(XMFLOAT3{ 75,2,0 });
+	SpawnRocky(XMFLOAT3{ 150,2,0 });
+	SpawnRocky(XMFLOAT3{ 200,2,0 });
+	SpawnRocky(XMFLOAT3{ 250,2,0 });
 
 	/*HUD*/
 	auto* pHUD = new InGameHudPrefab();
@@ -106,7 +115,7 @@ void PopStarOne::Initialize()
 void PopStarOne::PostInitialize()
 {
 	m_pCameraComponent = m_pCamera->GetComponent<CameraComponent>();
-	//m_pCameraComponent->SetActive(true);
+	m_pCameraComponent->SetActive(true);
 }
 
 void PopStarOne::Update()
@@ -139,4 +148,24 @@ void PopStarOne::HandleCameraMovement()
 	const XMFLOAT3 lightPos{ newPos.x + m_LightOffset.x, m_LightOffset.y, m_LightOffset.z };
 	m_SceneContext.pLights->SetDirectionalLight(lightPos, m_LightRotation);
 	
+}
+
+GameObject* PopStarOne::SpawnBobo(const XMFLOAT3& spawnLocation)
+{
+	auto* pBobo = new BoboPrefab();
+	pBobo->GetTransform()->Translate(50, 2, 0);
+	AddChild(pBobo);
+	pBobo->GetTransform()->Translate(spawnLocation);
+
+	return pBobo;
+}
+
+GameObject* PopStarOne::SpawnRocky(const XMFLOAT3& spawnLocation)
+{
+	auto* pRocky = new RockyPrefab();
+	pRocky->GetTransform()->Translate(25, 2, 0);
+	AddChild(pRocky);
+	pRocky->GetTransform()->Translate(spawnLocation);
+
+	return pRocky;
 }
