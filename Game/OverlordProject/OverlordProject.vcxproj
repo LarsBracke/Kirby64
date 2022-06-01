@@ -94,6 +94,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Components\EnemyComponent.cpp" />
+    <ClCompile Include="Materials\Post\PostBlur.cpp" />
+    <ClCompile Include="Materials\Post\PostGrayscale.cpp" />
+    <ClCompile Include="Scenes\Game\MainMenu.cpp" />
     <ClCompile Include="Prefabs\InGameHudPrefab.cpp" />
     <ClCompile Include="Prefabs\BoboPrefab.cpp" />
     <ClCompile Include="Components\HealthComponent.cpp" />
@@ -109,6 +112,7 @@
     <ClCompile Include="Prefabs\RockyPrefab.cpp" />
     <ClCompile Include="Scenes\Game\PopStarOne.cpp" />
     <ClCompile Include="Scenes\Game\TrainingStage.cpp" />
+    <ClCompile Include="Scenes\Week 10\PostProcessingScene.cpp" />
     <ClCompile Include="Scenes\Week 4\ModelTestScene.cpp" />
     <ClCompile Include="Scenes\Week 3\PongScene.cpp" />
     <ClCompile Include="Scenes\Week 3\ComponentTestScene.cpp" />
@@ -156,6 +160,9 @@
   <ItemGroup>
     <ClInclude Include="Components\HealthComponent.h" />
     <ClInclude Include="Components\EnemyComponent.h" />
+    <ClInclude Include="Materials\Post\PostBlur.h" />
+    <ClInclude Include="Materials\Post\PostGrayscale.h" />
+    <ClInclude Include="Scenes\Game\MainMenu.h" />
     <ClInclude Include="Prefabs\InGameHudPrefab.h" />
     <ClInclude Include="Misc\AbilityType.h" />
     <ClInclude Include="Prefabs\BoboPrefab.h" />
@@ -172,6 +179,7 @@
     <ClInclude Include="Prefabs\RockyPrefab.h" />
     <ClInclude Include="Scenes\Game\PopStarOne.h" />
     <ClInclude Include="Scenes\Game\TrainingStage.h" />
+    <ClInclude Include="Scenes\Week 10\PostProcessingScene.h" />
     <ClInclude Include="Scenes\Week 4\ModelTestScene.h" />
     <ClInclude Include="Scenes\Week 3\PongScene.h" />
     <ClInclude Include="Scenes\Week 3\ComponentTestScene.h" />

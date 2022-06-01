@@ -106,9 +106,9 @@ void PostProcessingMaterial::UpdateBaseEffectVariables(const SceneContext& /*sce
 	//In case we want to use pSource as a RTV (RenderTargetView, render to) we have to unbind it first as an SRV
 }
 
-void PostProcessingMaterial::DrawPass(const SceneContext& /*sceneContext*/, ID3DX11EffectTechnique* /*pTechnique*/, RenderTarget* /*pDestination*/)
+void PostProcessingMaterial::DrawPass(const SceneContext& sceneContext, ID3DX11EffectTechnique* pTechnique, RenderTarget* pDestination)
 {
-	TODO_W10(L"Implement PostProcessingMaterial Draw function")
+	//TODO_W10(L"Implement PostProcessingMaterial Draw function")
 	//This function invokes a Draw Call for our full screen quad
 	//The draw call uses pTechnique for rendering and renders to the given destination RenderTarget (pDestination)
 
@@ -117,8 +117,10 @@ void PostProcessingMaterial::DrawPass(const SceneContext& /*sceneContext*/, ID3D
 
 	//1. Bind the Destination RenderTarget (pDestination) to the pipeline
 	//		- Easily achieved by calling OverlordGame::SetRenderTarget (m_GameContext has a reference to OverlordGame)
+	m_GameContext.pGame->SetRenderTarget(pDestination);
 	//2. Clear the destination RT with a Purple color
 	//		- Using purple will make debugging easier, when the screen is purple you'll know something is wrong with your post-processing effects
+	pDestination->Clear(static_cast<XMFLOAT4>(DirectX::Colors::Purple));
 
 	//3. Set The Pipeline!
 	//		- Set Inputlayout > m_pDefaultInputLayout (The inputlayout for all post-processing effects should 'normally' be the same POSITION/TEXCOORD)
@@ -127,4 +129,17 @@ void PostProcessingMaterial::DrawPass(const SceneContext& /*sceneContext*/, ID3D
 	//		- Iterate the technique passes (same as usual)
 	//			- apply the pass
 	//			- DRAW! (use the m_VertexCount constant for the number of vertices)
+	sceneContext.d3dContext.pDeviceContext->IASetInputLayout(m_pDefaultInputLayout);
+	sceneContext.d3dContext.pDeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	constexpr UINT strides = sizeof(VertexPosTex);
+	constexpr UINT offsets = 0;
+	sceneContext.d3dContext.pDeviceContext->IASetVertexBuffers(0, 1, &m_pDefaultVertexBuffer, &strides, &offsets);
+
+	D3DX11_TECHNIQUE_DESC desc{ };
+	pTechnique->GetDesc(&desc);
+	for (UINT pass = 0; pass < desc.Passes; ++pass)
+	{
+		pTechnique->GetPassByIndex(pass)->Apply(0, sceneContext.d3dContext.pDeviceContext);
+		sceneContext.d3dContext.pDeviceContext->Draw(m_VertexCount, 0);
+	}
 }
