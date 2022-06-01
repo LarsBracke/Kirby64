@@ -29,8 +29,9 @@ private:
 	void HandleMovement(const SceneContext& sceneContext);
 	void HandleInhaling(const SceneContext& sceneContext);
 	void HandleExhaling(const SceneContext& sceneContext);
+	void HandleAudio(const SceneContext& sceneContext);
 
-	void PushBack(const SceneContext& sceneContext, const GameObject* pOther) const;
+	void PushBack(const SceneContext& sceneContext, const GameObject* pOther);
 
 private:
 	GameManager* m_pGameManager{ nullptr };
@@ -89,7 +90,7 @@ private:
 	const float m_InhaleRange{ 15.0f };
 	const float m_InhaleSpeed{ 10.0f };
 
-	AbilityType* m_pInhaledEnemy{ nullptr };
+	GameObject* m_pInhaledEnemy{ nullptr };
 
 	// Abilities
 	AbilityType* m_pActiveAbility{ nullptr };
@@ -97,5 +98,13 @@ private:
 	// Particles
 	GameObject* m_pParticleObject{ nullptr };
 	const float m_ParticleSpeed{ 20.0f };
+
+	// Audio
+	FMOD::Channel* m_pAudioChannel{ nullptr };
+	FMOD::Channel* m_pSecondaryAudioChannel{ nullptr };
+	FMOD::Sound* m_pSoundHurt{ nullptr };
+	FMOD::Sound* m_pSoundJump{ nullptr };
+	FMOD::Sound* m_pSoundInhale{ nullptr };
+	FMOD::Sound* m_pSoundPunch{ nullptr };
 };
 

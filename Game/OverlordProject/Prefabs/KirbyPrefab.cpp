@@ -58,8 +58,7 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 		{
 			if (m_IsInhaling)
 			{
-				// TODO: do not us heap memory
-				m_pInhaledEnemy = new AbilityType(pEnemyComponent->GetAbilityType());
+				m_pInhaledEnemy = pOther;
 				pEnemyComponent->Kill();
 			}
 			else
@@ -112,6 +111,20 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 	m_pParticleObject = new GameObject();
 	m_pParticleObject->GetTransform()->Translate(10.f, 0, 0);
 	m_pInhaleParticleSystem = m_pParticleObject->AddComponent(new ParticleEmitterComponent(L"Textures/Inhale.png", settings));
+
+	/*audio*/
+	auto* pSoundSystem = SoundManager::Get()->GetSystem();
+	FMOD_RESULT result{ };
+
+	result = pSoundSystem->createStream("Resources/Audio/Kirby_Jump.mp3", FMOD_DEFAULT, nullptr, &m_pSoundJump);
+	HANDLE_ERROR(result);
+	result = pSoundSystem->createStream("Resources/Audio/Kirby_Hurt.mp3", FMOD_DEFAULT, nullptr, &m_pSoundHurt);
+	HANDLE_ERROR(result);
+	result = pSoundSystem->createStream("Resources/Audio/Kirby_Inhale.mp3", FMOD_DEFAULT, nullptr, &m_pSoundInhale);
+	HANDLE_ERROR(result);
+	result = pSoundSystem->createStream("Resources/Audio/Punch.mp3", FMOD_DEFAULT, nullptr, &m_pSoundPunch);
+
+	m_pAudioChannel->setVolume(0.5f);
 }
 
 void KirbyPrefab::PostInitialize(const SceneContext&)
@@ -128,6 +141,7 @@ void KirbyPrefab::Update(const SceneContext& sceneContext)
 	HandleMovement(sceneContext);
 	HandleInhaling(sceneContext);
 	HandleExhaling(sceneContext);
+	HandleAudio(sceneContext);
 }
 
 void KirbyPrefab::HandleMovement(const SceneContext& sceneContext)
@@ -260,7 +274,24 @@ void KirbyPrefab::HandleExhaling(const SceneContext& sceneContext)
 	
 }
 
-void KirbyPrefab::PushBack(const SceneContext& sceneContext, const GameObject* pOther) const
+void KirbyPrefab::HandleAudio(const SceneContext& sceneContext)
+{
+	auto* pSoundSystem = SoundManager::Get()->GetSystem();
+	if (sceneContext.pInput->IsActionTriggered(Jump))
+	{
+		pSoundSystem->playSound(m_pSoundJump, nullptr, false, &m_pAudioChannel);
+	}
+	if (sceneContext.pInput->IsActionTriggered(StartInhale))
+	{
+		pSoundSystem->playSound(m_pSoundInhale, nullptr, false, &m_pAudioChannel);
+	}
+	if (sceneContext.pInput->IsActionTriggered(StopInhale))
+	{
+		pSoundSystem->playSound(m_pSoundInhale, nullptr, true, &m_pAudioChannel);
+	}
+}
+
+void KirbyPrefab::PushBack(const SceneContext& sceneContext, const GameObject* pOther)
 {
 	m_pHealthComponent->DoDamage(1);
 	const float myPosX = GetTransform()->GetPosition().x;
@@ -270,6 +301,9 @@ void KirbyPrefab::PushBack(const SceneContext& sceneContext, const GameObject* p
 		m_pController->Move(XMFLOAT3{ -m_PushBackSpeed * sceneContext.pGameTime->GetElapsed(), 0 ,0 });
 	else
 		m_pController->Move(XMFLOAT3{ m_PushBackSpeed * sceneContext.pGameTime->GetElapsed(), 0 ,0 });
+
+	SoundManager::Get()->GetSystem()->playSound(m_pSoundHurt, nullptr, false, &m_pAudioChannel);
+	SoundManager::Get()->GetSystem()->playSound(m_pSoundPunch, nullptr, false, &m_pSecondaryAudioChannel);
 }
 
 void KirbyPrefab::SetAnimationState(AnimationState newState, bool forceAnimationChange)
