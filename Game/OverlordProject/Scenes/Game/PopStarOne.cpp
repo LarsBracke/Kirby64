@@ -178,13 +178,13 @@ void PopStarOne::OnGUI()
 void PopStarOne::OnSceneActivated()
 {
 	/*audio*/
-	//auto* pFmodSystem = SoundManager::Get()->GetSystem();
-	//auto result = pFmodSystem->createStream("Resources/Audio/Music.mp3", FMOD_DEFAULT, nullptr, &m_pMusic);
-	//HANDLE_ERROR(result);
-	//m_pMusic->setMode(FMOD_LOOP_NORMAL);
-	//result = pFmodSystem->playSound(m_pMusic, nullptr, false, &m_pMusicChannel);
-	//HANDLE_ERROR(result);
-	//m_pMusicChannel->setVolume(0.1f);
+	auto* pFmodSystem = SoundManager::Get()->GetSystem();
+	auto result = pFmodSystem->createStream("Resources/Audio/Music.mp3", FMOD_DEFAULT, nullptr, &m_pMusic);
+	HANDLE_ERROR(result);
+	m_pMusic->setMode(FMOD_LOOP_NORMAL);
+	result = pFmodSystem->playSound(m_pMusic, nullptr, false, &m_pMusicChannel);
+	HANDLE_ERROR(result);
+	m_pMusicChannel->setVolume(0.1f);
 }
 
 void PopStarOne::HandleCameraMovement()

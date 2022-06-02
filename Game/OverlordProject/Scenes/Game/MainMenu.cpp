@@ -26,6 +26,10 @@ void MainMenu::Update()
 		SceneManager::Get()->AddGameScene(new PopStarOne());
 		SceneManager::Get()->NextScene();
 	}
+	if (m_SceneContext.pInput->IsActionTriggered(Exit))
+	{
+		PostQuitMessage(NULL);
+	}
 }
 
 void MainMenu::OnSceneActivated()
