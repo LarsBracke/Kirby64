@@ -1,5 +1,10 @@
 //=============================================================================
-//// Shader uses position and texture
+// Outline shader
+//=============================================================================
+// Resources:
+// https://www.youtube.com/watch?v=RMt6DcaMxcE
+// https://www.youtube.com/watch?v=8Xq7tU5QN1Q
+// https://spcneill.wordpress.com/2015/07/20/hlsl-shaders-and-post-processing/
 //=============================================================================
 SamplerState samPoint
 {
@@ -93,11 +98,10 @@ float4 PS(PS_INPUT input): SV_Target
 
 //TECHNIQUE
 //---------
-technique11 Blur
+technique11 Outline
 {
     pass P0
     {
-		// Set states...
         SetVertexShader( CompileShader( vs_4_0, VS() ) );
         SetGeometryShader( NULL );
         SetPixelShader( CompileShader( ps_4_0, PS() ) );
