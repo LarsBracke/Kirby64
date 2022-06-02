@@ -66,6 +66,8 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 				m_PushBack = true;
 				m_pPushingObject = pOther;
 				m_pHealthComponent->DoDamage(1);
+				if (m_pHealthComponent->GetHealth() == 0)
+					SceneManager::Get()->NextScene();
 			}
 		}
 	};
@@ -94,7 +96,7 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 	sceneContext.pInput->AddInputAction(actionExhale);
 
 	/*health*/
-	m_pHealthComponent = AddComponent(new HealthComponent(10));
+	m_pHealthComponent = AddComponent(new HealthComponent(25));
 
 	/*particles*/
 	ParticleEmitterSettings settings{ };

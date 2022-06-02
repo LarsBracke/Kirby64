@@ -13,6 +13,8 @@ protected:
 	void Initialize() override;
 	void Update() override;
 
+	void OnSceneActivated() override;
+
 private:
 	SpriteComponent* m_pIndicator{ nullptr };
 	SpriteComponent* m_pMainMenu{ nullptr };

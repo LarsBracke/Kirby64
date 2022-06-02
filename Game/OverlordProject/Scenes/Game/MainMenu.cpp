@@ -19,9 +19,20 @@ void MainMenu::Update()
 {
 	if (m_SceneContext.pInput->IsActionTriggered(Start))
 	{
-		auto* pLevelScene = SceneManager::Get()->GetNextScene();
-		SceneManager::Get()->RemoveGameScene(pLevelScene);
+		if (auto* pLevelScene = SceneManager::Get()->GetNextScene())
+		{
+			SceneManager::Get()->RemoveGameScene(pLevelScene);
+		}
 		SceneManager::Get()->AddGameScene(new PopStarOne());
 		SceneManager::Get()->NextScene();
 	}
+}
+
+void MainMenu::OnSceneActivated()
+{
+	if (auto* pLevelScene = SceneManager::Get()->GetNextScene())
+	{
+		SceneManager::Get()->RemoveGameScene(pLevelScene);
+	}
+	SceneManager::Get()->AddGameScene(new PopStarOne());
 }

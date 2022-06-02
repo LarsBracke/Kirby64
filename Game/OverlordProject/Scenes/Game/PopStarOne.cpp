@@ -19,7 +19,6 @@
 PopStarOne::~PopStarOne()
 {
 	m_pMusicChannel->stop();
-	delete m_pMusicChannel;
 }
 
 void PopStarOne::Initialize()
@@ -72,7 +71,7 @@ void PopStarOne::Initialize()
 	auto* pEndHouse = new GameObject();
 	pEndHouse->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
 	pEndHouse->GetTransform()->Rotate(0,90,0);
-	pEndHouse->GetTransform()->Translate(180, 10, 10);
+	pEndHouse->GetTransform()->Translate(180, 10, 7.5);
 	pModelComponent = pEndHouse->AddComponent(new ModelComponent(L"Meshes/EndHouse.ovm"));
 	pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
 	pMaterial->SetDiffuseTexture(L"Textures/EndHouse.png");
@@ -111,15 +110,26 @@ void PopStarOne::Initialize()
 	auto* pHUD = new InGameHudPrefab();
 	AddChild(pHUD);
 
-	/*testing cube*/
-	auto* pCube = new CubePrefab(5,5,5);
-	pCube->AddComponent(new RigidBodyComponent())->AddCollider(PxBoxGeometry{ 2.5f,2.5f,2.5f }, *pDefaultMaterial);
-	pCube->GetTransform()->Translate(10, 5, 0);
-	AddChild(pCube);
-
 	/*camera*/
 	m_pCamera = new FixedCamera();
 	AddChild(m_pCamera);
+
+	/*level end*/
+	auto* pLevelEnd = new GameObject();
+	AddChild(pLevelEnd);
+	pLevelEnd->GetTransform()->Translate(295, 0, 0);
+	auto* pRigidBodyComponent = pLevelEnd->AddComponent(new RigidBodyComponent(true));
+	pRigidBodyComponent->AddCollider(PxBoxGeometry{ 5,5,5 }, * pDefaultMaterial, true);
+
+	auto onLevelEndHit = [&](GameObject*, GameObject* pOther, PxTriggerAction /*action*/)
+	{
+		if (pOther == GameManager::Get()->GetKirby())
+		{
+			SceneManager::Get()->PreviousScene();
+		}
+	};
+	pLevelEnd->SetOnTriggerCallBack(onLevelEndHit);
+	
 }
 
 void PopStarOne::PostInitialize()
