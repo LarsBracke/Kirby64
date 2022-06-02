@@ -61,7 +61,7 @@ void PopStarOne::Initialize()
 	auto* pSky = new GameObject();
 	pSky->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
 	pSky->GetTransform()->Rotate(0, 0, 90);
-	pSky->GetTransform()->Translate(0, 33.33f, 175);
+	pSky->GetTransform()->Translate(0, 33.33f, 125);
 	pModelComponent = pSky->AddComponent(new ModelComponent(L"Meshes/Sky.ovm"));
 	auto* pSkyMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial>();
 	pSkyMaterial->SetDiffuseTexture(L"Textures/Sky.png");
