@@ -69,23 +69,22 @@ float4 PS(PS_INPUT input): SV_Target
     float4 defaultColor = gTexture.Sample(samPoint, input.TexCoord + float2(0, 0));
     
     // Sample neighboring colors
-    float e11 = gTexture.Sample(samPoint, input.TexCoord + float2(-dx, -dy));
-    float e12 = gTexture.Sample(samPoint, input.TexCoord + float2(0, -dy));
-    float e13 = gTexture.Sample(samPoint, input.TexCoord + float2(dx, -dy));
+    float bottomLeft = gTexture.Sample(samPoint, input.TexCoord + float2(-dx, -dy));
+    float bottomMiddle = gTexture.Sample(samPoint, input.TexCoord + float2(0, -dy));
+    float bottomRight = gTexture.Sample(samPoint, input.TexCoord + float2(dx, -dy));
 
-    float e21 = gTexture.Sample(samPoint, input.TexCoord + float2(-dx, 0));
-    float e22 = gTexture.Sample(samPoint, input.TexCoord + float2(0, 0));
-    float e23 = gTexture.Sample(samPoint, input.TexCoord + float2(dx, 0));
+    float left = gTexture.Sample(samPoint, input.TexCoord + float2(-dx, 0));
+    float right = gTexture.Sample(samPoint, input.TexCoord + float2(dx, 0));
 
-    float e31 = gTexture.Sample(samPoint, input.TexCoord + float2(-dx, dy));
-    float e32 = gTexture.Sample(samPoint, input.TexCoord + float2(0, dy));
-    float e33 = gTexture.Sample(samPoint, input.TexCoord + float2(dx, dy));
+    float topLeft = gTexture.Sample(samPoint, input.TexCoord + float2(-dx, dy));
+    float topMiddle = gTexture.Sample(samPoint, input.TexCoord + float2(0, dy));
+    float topRight = gTexture.Sample(samPoint, input.TexCoord + float2(dx, dy));
 
     // Line detection
-    float t1 = e13 + e33 + (2 * e23) - e11 - (2 * e21) - e31;
-    float t2 = e31 + (2 * e32) + e33 - e11 - (2 * e12) - e13;
+    float t0 = bottomRight + topRight + (2 * right) - bottomLeft - (2 * left) - topLeft;
+    float t1 = topLeft + (2 * topMiddle) + topRight - bottomLeft - (2 * bottomMiddle) - bottomRight;
     
-    if (((t1 * t1) + (t2 * t2)) > 0.8f)
+    if (((t0 * t0) + (t1 * t1)) > 0.5f)
         return gLineColor;
     else
         return float4((float3)defaultColor, 1.0f);

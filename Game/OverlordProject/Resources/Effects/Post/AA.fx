@@ -68,7 +68,9 @@ float4 PS(PS_INPUT input): SV_Target
     float4 bottomLeft = gTexture.Sample(samPoint, float2(input.TexCoord.x - dx, input.TexCoord.y - dy));
     float4 bottomRight = gTexture.Sample(samPoint, float2(input.TexCoord.x + dx, input.TexCoord.y - dy));
     
-    float4 finalColor = (topLeft + topRight + bottomLeft + bottomRight) / 4.0f;
+    float4 center = gTexture.Sample(samPoint, input.TexCoord);
+    
+    float4 finalColor = (center + topLeft + topRight + bottomLeft + bottomRight) / 5.0f;
     return float4((float3) finalColor, 1.0f);
 }
 
