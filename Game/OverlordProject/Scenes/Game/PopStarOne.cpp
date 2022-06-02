@@ -62,6 +62,14 @@ void PopStarOne::Initialize()
 	pModelComponent->SetMaterial(pSkyMaterial);
 	pLevel->AddChild(pSky);
 
+	auto* pEndHouse = new GameObject();
+	pModelComponent = pEndHouse->AddComponent(new ModelComponent(L"Meshes/EndHouse.ovm"));
+	pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
+	pMaterial->SetDiffuseTexture(L"Textures/EndHouse.png");
+	pModelComponent->SetMaterial(pMaterial);
+	pLevel->AddChild(pEndHouse);
+
+
 	SpawnBackGroundBoxes();
 
 	AddBridge(XMFLOAT3{ 66,1,0 });
@@ -116,7 +124,7 @@ void PopStarOne::Initialize()
 void PopStarOne::PostInitialize()
 {
 	m_pCameraComponent = m_pCamera->GetComponent<CameraComponent>();
-	//m_pCameraComponent->SetActive(true);
+	m_pCameraComponent->SetActive(true);
 
 
 	/*post processing*/

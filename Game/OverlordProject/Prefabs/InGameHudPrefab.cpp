@@ -4,12 +4,18 @@
 #include "Helpers/GameManager.h"
 #include "Components/SpriteComponent.h"
 
-void InGameHudPrefab::Initialize(const SceneContext&)
+void InGameHudPrefab::Initialize(const SceneContext& /*sceneContext*/)
 {
-	//auto* pHUD = new GameObject();
-	//AddChild(pHUD);
-	//pHUD->AddComponent(new SpriteComponent(L"Textures/UI_Background.png"));
-	//pHUD->GetTransform()->Translate(0, 720 - 193, 0);
+	auto* pHUD = new GameObject();
+	AddChild(pHUD);
+
+	auto* pHealthIcon = new GameObject();
+	pHealthIcon->AddComponent(new SpriteComponent(L"Textures/Health.png"));
+	pHealthIcon->GetTransform()->Translate(5, 665, 0.5f);
+	pHealthIcon->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
+	pHUD->AddChild(pHealthIcon);
+
+	m_pFont = ContentManager::Load<SpriteFont>(L"SpriteFonts/Consolas_32.fnt");
 }
 
 void InGameHudPrefab::PostInitialize(const SceneContext&)
@@ -17,8 +23,13 @@ void InGameHudPrefab::PostInitialize(const SceneContext&)
 	m_pKirbyHealthComponent = GameManager::Get()->GetKirby()->GetComponent<HealthComponent>();
 	m_HealthAmount = m_pKirbyHealthComponent->GetHealth();
 
-	AddHealthElement(XMFLOAT3{ 10, 720 - 75, 0 });
-	AddHealthElement(XMFLOAT3{ 75, 720 - 75, 0 });
+
+}
+
+void InGameHudPrefab::Update(const SceneContext&)
+{
+	m_Text = std::to_string(m_pKirbyHealthComponent->GetHealth());
+	TextRenderer::Get()->DrawText(m_pFont, StringUtil::utf8_decode(m_Text), m_TextPosition, m_TextColor);
 }
 
 GameObject* InGameHudPrefab::AddHealthElement(const XMFLOAT3& position)

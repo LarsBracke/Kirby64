@@ -51,7 +51,7 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 
 	auto onKirbyHit = [&](GameObject*, GameObject* pOther, PxTriggerAction /*action*/)
 	{
-		if (pOther == nullptr)
+		if (pOther == nullptr || pOther == m_pPushingObject)
 			return;
 
 		if (auto* pEnemyComponent = pOther->GetComponent<EnemyComponent>())
@@ -65,6 +65,7 @@ void KirbyPrefab::Initialize(const SceneContext& sceneContext)
 			{
 				m_PushBack = true;
 				m_pPushingObject = pOther;
+				m_pHealthComponent->DoDamage(1);
 			}
 		}
 	};
@@ -320,6 +321,8 @@ void KirbyPrefab::PushBack(const SceneContext& sceneContext, const GameObject* p
 
 	SoundManager::Get()->GetSystem()->playSound(m_pSoundHurt, nullptr, false, &m_pAudioChannel);
 	SoundManager::Get()->GetSystem()->playSound(m_pSoundPunch, nullptr, false, &m_pSecondaryAudioChannel);
+
+	m_pPushingObject = nullptr;
 }
 
 void KirbyPrefab::SetAnimationState(AnimationState newState, bool forceAnimationChange)
