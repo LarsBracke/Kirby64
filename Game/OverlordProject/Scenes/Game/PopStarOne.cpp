@@ -64,6 +64,10 @@ void PopStarOne::Initialize()
 
 	SpawnBackGroundBoxes();
 
+	AddBridge(XMFLOAT3{ 66,1,0 });
+	AddBridge(XMFLOAT3{ 264,1,0 });
+	AddBridge(XMFLOAT3{ 279,1,0 });
+
 	/*kirby*/
 	KirbyPrefab* pKirby{ new KirbyPrefab() };
 	pKirby->GetTransform()->Translate(-275, 10, 0);
@@ -112,7 +116,7 @@ void PopStarOne::Initialize()
 void PopStarOne::PostInitialize()
 {
 	m_pCameraComponent = m_pCamera->GetComponent<CameraComponent>();
-	m_pCameraComponent->SetActive(true);
+	//m_pCameraComponent->SetActive(true);
 
 
 	/*post processing*/
@@ -191,4 +195,21 @@ void PopStarOne::SpawnBackGroundBoxes()
 		XMFLOAT3 boxPosition{ startPosition.x + (count * boxSpacingX), (MathHelper::randF(-1,1) * boxSpacingY) + startPosition.y, (MathHelper::randF(-3,3) * boxSpacingZ) + startPosition.z };
 		pBox->GetTransform()->Translate(boxPosition);
 	}
+}
+
+GameObject* PopStarOne::AddBridge(const XMFLOAT3 location)
+{
+	auto* pBridge = new GameObject();
+	auto* pModelComponent = pBridge->AddComponent(new ModelComponent(L"Meshes/Bridge.ovm"));
+	auto* pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
+	pMaterial->SetDiffuseTexture(L"Textures/Bridge.png");
+	pModelComponent->SetMaterial(pMaterial);
+
+	pBridge->GetTransform()->Rotate(0, 90, 0);
+	pBridge->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
+
+	pBridge->GetTransform()->Translate(location);
+
+	AddChild(pBridge);
+	return pBridge;
 }
