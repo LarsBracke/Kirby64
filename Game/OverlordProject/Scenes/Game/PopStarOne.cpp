@@ -16,6 +16,12 @@
 #include "Prefabs/RockyPrefab.h"
 #include "Prefabs/InGameHudPrefab.h"
 
+PopStarOne::~PopStarOne()
+{
+	m_pMusicChannel->stop();
+	delete m_pMusicChannel;
+}
+
 void PopStarOne::Initialize()
 {
 	/*settings*/
@@ -78,8 +84,8 @@ void PopStarOne::Initialize()
 	SpawnBackGroundBoxes();
 
 	AddBridge(XMFLOAT3{ 66,1,0 });
-	AddBridge(XMFLOAT3{ 264,1,0 });
-	AddBridge(XMFLOAT3{ 279,1,0 });
+	AddBridge(XMFLOAT3{ 265,1,0 });
+	AddBridge(XMFLOAT3{ 278,1,0 });
 
 	/*kirby*/
 	KirbyPrefab* pKirby{ new KirbyPrefab() };
@@ -114,23 +120,12 @@ void PopStarOne::Initialize()
 	/*camera*/
 	m_pCamera = new FixedCamera();
 	AddChild(m_pCamera);
-
-	/*audio*/
-	auto* pFmodSystem = SoundManager::Get()->GetSystem();
-	FMOD::Sound* pMusic{ nullptr };
-	auto result = pFmodSystem->createStream("Resources/Audio/Music.mp3", FMOD_DEFAULT, nullptr, &pMusic);
-	HANDLE_ERROR(result);
-	pMusic->setMode(FMOD_LOOP_NORMAL);
-	result = pFmodSystem->playSound(pMusic, nullptr, false, &m_pMusicChannel);
-	HANDLE_ERROR(result);
-	m_pMusicChannel->setVolume(0.1f);
 }
 
 void PopStarOne::PostInitialize()
 {
 	m_pCameraComponent = m_pCamera->GetComponent<CameraComponent>();
 	m_pCameraComponent->SetActive(true);
-
 
 	/*post processing*/
 	AddPostProcessingEffect(MaterialManager::Get()->CreateMaterial<PostOutline>());
@@ -149,6 +144,18 @@ void PopStarOne::OnGUI()
 	//ImGui::SliderFloat3("Light Position", ConvertUtil::ToImFloatPtr(pos), -500, 500);
 	//ImGui::SliderFloat3("Light Rotation", ConvertUtil::ToImFloatPtr(rot), 0, 2*XM_PI);
 	//m_SceneContext.pLights->SetDirectionalLight(pos, rot);
+}
+
+void PopStarOne::OnSceneActivated()
+{
+	/*audio*/
+	auto* pFmodSystem = SoundManager::Get()->GetSystem();
+	auto result = pFmodSystem->createStream("Resources/Audio/Music.mp3", FMOD_DEFAULT, nullptr, &m_pMusic);
+	HANDLE_ERROR(result);
+	m_pMusic->setMode(FMOD_LOOP_NORMAL);
+	result = pFmodSystem->playSound(m_pMusic, nullptr, false, &m_pMusicChannel);
+	HANDLE_ERROR(result);
+	m_pMusicChannel->setVolume(0.1f);
 }
 
 void PopStarOne::HandleCameraMovement()

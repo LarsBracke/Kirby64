@@ -7,7 +7,7 @@ class PopStarOne final : public GameScene
 {
 public:
 	PopStarOne() : GameScene(L"PopStarOne") { }
-	~PopStarOne() override = default;
+	~PopStarOne();
 	PopStarOne(const PopStarOne& other) = delete;
 	PopStarOne(PopStarOne&& other) noexcept = delete;
 	PopStarOne& operator=(const PopStarOne& other) = delete;
@@ -18,6 +18,8 @@ private:
 	void PostInitialize() override;
 	void Update() override;
 	void OnGUI() override;
+
+	void OnSceneActivated() override;
 
 	void HandleCameraMovement();
 
@@ -42,5 +44,6 @@ private:
 
 	// Audio
 	FMOD::Channel* m_pMusicChannel{ nullptr };
+	FMOD::Sound* m_pMusic{ nullptr };
 };
 

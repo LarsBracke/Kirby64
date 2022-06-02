@@ -79,6 +79,20 @@ void SceneManager::PreviousScene()
 	}
 }
 
+GameScene* SceneManager::GetNextScene() const
+{
+	for (unsigned int i = 0; i < m_pScenes.size(); ++i)
+	{
+		if (m_pScenes[i] == m_ActiveScene)
+		{
+			const auto nextScene = ++i % m_pScenes.size();
+			return m_pScenes[nextScene];
+		}
+	}
+
+	return nullptr;
+}
+
 void SceneManager::SetActiveGameScene(const std::wstring& sceneName)
 {
 	const auto it = std::ranges::find_if(m_pScenes, [sceneName](const GameScene* pScene)
