@@ -4,6 +4,7 @@
 #include "Helpers/GameManager.h"
 
 #include "Materials/DiffuseMaterial.h"
+#include "Materials/Post/PostAA.h"
 #include "Materials/Shadow/DiffuseMaterial_Shadow.h"
 
 #include "Materials/Post/PostBlur.h"
@@ -128,11 +129,12 @@ void PopStarOne::Initialize()
 void PopStarOne::PostInitialize()
 {
 	m_pCameraComponent = m_pCamera->GetComponent<CameraComponent>();
-	//m_pCameraComponent->SetActive(true);
+	m_pCameraComponent->SetActive(true);
 
 
 	/*post processing*/
 	AddPostProcessingEffect(MaterialManager::Get()->CreateMaterial<PostOutline>());
+	AddPostProcessingEffect(MaterialManager::Get()->CreateMaterial<PostAA>());
 }
 
 void PopStarOne::Update()
