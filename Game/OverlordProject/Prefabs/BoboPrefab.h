@@ -36,7 +36,7 @@ private:
 	CharacterDesc m_CharacterDesc;
 
 	const float m_AttackRange{ 25.f };
-	const float m_DashRange{ 5.f };
+	const float m_DashRange{ 7.0f };
 	const float m_Speed{ 5.f };
 	const float m_DashSpeed{ 30.f };
 

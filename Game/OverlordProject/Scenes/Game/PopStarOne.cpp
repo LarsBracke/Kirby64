@@ -79,12 +79,34 @@ void PopStarOne::Initialize()
 	pModelComponent->SetMaterial(pMaterial,1);
 	pLevel->AddChild(pEndHouse);
 
+	auto* pRiver = new GameObject();
+	pRiver->GetTransform()->Scale(0.2f, 0.2f, 0.2f);
+	pRiver->GetTransform()->Rotate(0, 90, 0);
+	pRiver->GetTransform()->Translate(-135, 0, 150);
+	AddChild(pRiver);
+	pModelComponent = pRiver->AddComponent(new ModelComponent(L"Meshes/River.ovm"));
+	pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
+	pMaterial->SetDiffuseTexture(L"Textures/River.png");
+	pModelComponent->SetMaterial(pMaterial);
+
+	auto* pRiver2 = new GameObject();
+	pRiver2->GetTransform()->Scale(0.2f, 0.2f, 0.2f);
+	pRiver2->GetTransform()->Rotate(0, 90, 0);
+	pRiver2->GetTransform()->Translate(80, 0, 150);
+	AddChild(pRiver2);
+	pModelComponent = pRiver2->AddComponent(new ModelComponent(L"Meshes/River.ovm"));
+	pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
+	pMaterial->SetDiffuseTexture(L"Textures/River.png");
+	pModelComponent->SetMaterial(pMaterial);
+
 
 	SpawnBackGroundBoxes();
 
 	AddBridge(XMFLOAT3{ 66,1,0 });
 	AddBridge(XMFLOAT3{ 265,1,0 });
 	AddBridge(XMFLOAT3{ 278,1,0 });
+
+	//AddPathBox(XMFLOAT3{ 0,0,0 });
 
 	/*kirby*/
 	KirbyPrefab* pKirby{ new KirbyPrefab() };
@@ -228,7 +250,21 @@ void PopStarOne::SpawnBackGroundBoxes()
 	}
 }
 
-GameObject* PopStarOne::AddBridge(const XMFLOAT3 location)
+GameObject* PopStarOne::AddPathBox(const XMFLOAT3& location)
+{
+	auto* pBox = new GameObject();
+	auto* pModelComponent = pBox->AddComponent(new ModelComponent(L"Meshes/PathBox.ovm"));
+	auto* pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
+	pMaterial->SetDiffuseTexture(L"Textures/PathBox.png");
+	pModelComponent->SetMaterial(pMaterial);
+
+	pBox->GetTransform()->Translate(location);
+
+	AddChild(pBox);
+	return pBox;
+}
+
+GameObject* PopStarOne::AddBridge(const XMFLOAT3& location)
 {
 	auto* pBridge = new GameObject();
 	auto* pModelComponent = pBridge->AddComponent(new ModelComponent(L"Meshes/Bridge.ovm"));
