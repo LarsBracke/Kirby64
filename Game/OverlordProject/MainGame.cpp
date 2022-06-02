@@ -88,6 +88,7 @@
 
 #ifdef GAME
 #include "Scenes/Game/TrainingStage.h"
+#include "Scenes/Game/MainMenu.h"
 #include "Scenes/Game/PopStarOne.h"
 #endif
 
@@ -174,6 +175,7 @@ void MainGame::Initialize()
 
 #ifdef GAME
 	//SceneManager::Get()->AddGameScene(new TrainingStage());
+	SceneManager::Get()->AddGameScene(new MainMenu());
 	SceneManager::Get()->AddGameScene(new PopStarOne());
 #endif
 }
