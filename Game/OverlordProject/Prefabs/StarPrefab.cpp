@@ -34,6 +34,7 @@ void StarPrefab::Initialize(const SceneContext&)
 		{
 			m_ObjectHit = true;
 			pEnemyComponent->Kill();
+			GetTransform()->Translate(0, -100, 0);
 		}
 	};
 	pCollision->SetOnTriggerCallBack(onStarHit);
