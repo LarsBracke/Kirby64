@@ -63,10 +63,14 @@ void PopStarOne::Initialize()
 	pLevel->AddChild(pSky);
 
 	auto* pEndHouse = new GameObject();
+	pEndHouse->GetTransform()->Scale(0.1f, 0.1f, 0.1f);
+	pEndHouse->GetTransform()->Rotate(0,90,0);
+	pEndHouse->GetTransform()->Translate(180, 10, 10);
 	pModelComponent = pEndHouse->AddComponent(new ModelComponent(L"Meshes/EndHouse.ovm"));
 	pMaterial = MaterialManager::Get()->CreateMaterial<DiffuseMaterial_Shadow>();
 	pMaterial->SetDiffuseTexture(L"Textures/EndHouse.png");
-	pModelComponent->SetMaterial(pMaterial);
+	pModelComponent->SetMaterial(pMaterial,0);
+	pModelComponent->SetMaterial(pMaterial,1);
 	pLevel->AddChild(pEndHouse);
 
 
