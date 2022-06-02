@@ -17,15 +17,15 @@
 #include "Prefabs/InGameHudPrefab.h"
 
 PopStarOne::~PopStarOne()
-{
-	m_pMusicChannel->stop();
-}
+{ }
 
 void PopStarOne::Initialize()
 {
 	/*settings*/
-	m_SceneContext.settings.drawGrid = true;
-	m_SceneContext.settings.enableOnGUI = true;
+	m_SceneContext.settings.drawGrid = false;
+	m_SceneContext.settings.drawPhysXDebug = false;
+	m_SceneContext.settings.drawUserDebug = false;
+	m_SceneContext.settings.enableOnGUI = false;
 
 	/*light*/
 	m_SceneContext.pLights->SetDirectionalLight({ -350, 285, -100 }, { 0.740129888f, -0.597205281f, 0.309117377f });
@@ -99,14 +99,11 @@ void PopStarOne::Initialize()
 	pMaterial->SetDiffuseTexture(L"Textures/River.png");
 	pModelComponent->SetMaterial(pMaterial);
 
-
 	SpawnBackGroundBoxes();
 
 	AddBridge(XMFLOAT3{ 66,1,0 });
 	AddBridge(XMFLOAT3{ 265,1,0 });
 	AddBridge(XMFLOAT3{ 278,1,0 });
-
-	//AddPathBox(XMFLOAT3{ 0,0,0 });
 
 	/*kirby*/
 	KirbyPrefab* pKirby{ new KirbyPrefab() };
@@ -181,13 +178,13 @@ void PopStarOne::OnGUI()
 void PopStarOne::OnSceneActivated()
 {
 	/*audio*/
-	auto* pFmodSystem = SoundManager::Get()->GetSystem();
-	auto result = pFmodSystem->createStream("Resources/Audio/Music.mp3", FMOD_DEFAULT, nullptr, &m_pMusic);
-	HANDLE_ERROR(result);
-	m_pMusic->setMode(FMOD_LOOP_NORMAL);
-	result = pFmodSystem->playSound(m_pMusic, nullptr, false, &m_pMusicChannel);
-	HANDLE_ERROR(result);
-	m_pMusicChannel->setVolume(0.1f);
+	//auto* pFmodSystem = SoundManager::Get()->GetSystem();
+	//auto result = pFmodSystem->createStream("Resources/Audio/Music.mp3", FMOD_DEFAULT, nullptr, &m_pMusic);
+	//HANDLE_ERROR(result);
+	//m_pMusic->setMode(FMOD_LOOP_NORMAL);
+	//result = pFmodSystem->playSound(m_pMusic, nullptr, false, &m_pMusicChannel);
+	//HANDLE_ERROR(result);
+	//m_pMusicChannel->setVolume(0.1f);
 }
 
 void PopStarOne::HandleCameraMovement()
