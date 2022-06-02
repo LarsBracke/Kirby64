@@ -88,7 +88,15 @@ void BoboPrefab::MoveToKirby(const SceneContext& sceneContext)
 	XMFLOAT3 toKirby{ };
 	XMStoreFloat3(&toKirby, XMVector3Normalize(XMVectorSubtract(kirbyPos, myPos)));
 	XMFLOAT3 displacement{ };
-	displacement.x = toKirby.x * m_Speed * sceneContext.pGameTime->GetElapsed();
+
+	float distance{ };
+	XMStoreFloat(&distance, XMVector3Length(XMVectorSubtract(kirbyPos, myPos)));
+
+	if (distance < m_DashRange)
+		displacement.x = toKirby.x * m_DashSpeed * sceneContext.pGameTime->GetElapsed();
+	else
+		displacement.x = toKirby.x * m_Speed * sceneContext.pGameTime->GetElapsed();
+
 	m_pControllerComponent->Move(displacement);
 
 	if (displacement.x > 0)
@@ -96,7 +104,7 @@ void BoboPrefab::MoveToKirby(const SceneContext& sceneContext)
 	else
 		GetTransform()->Rotate(0, 0, -90);
 
-	if (abs(displacement.x) > 0.01f)
+	if (abs(displacement.x) > 0.05f)
 		SetAnimationState(AnimationState::Running);
 	else
 		SetAnimationState(AnimationState::Idle);
